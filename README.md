@@ -10,6 +10,7 @@ https://hackmd.io/cb8IFxXeRgSicYoMVjLfNw?both
 * Ben
 * Aylin
 * Chandi
+* chandimalgalmangoda@t-online.de
 * David
 * Beyda
 
