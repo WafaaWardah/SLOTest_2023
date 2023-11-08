@@ -10,6 +10,7 @@ https://hackmd.io/cb8IFxXeRgSicYoMVjLfNw?both
 * Ben
 * benbergerben@gmail.com
 * Aylin
+* aylin.gabriell.arslan@campus.tu-berlin.de
 * Chandi
 * chandimalgalmangoda@t-online.de
 * David
