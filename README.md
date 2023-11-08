@@ -6,5 +6,15 @@
 https://hackmd.io/cb8IFxXeRgSicYoMVjLfNw?both
 
 ## Team
+* Jabora
+* Ben
+* Aylin
+* Chandi
+* David
+* Beyda
+
+
+## Participant Portal
+https://www.tu.berlin/ipa/einrichtungen-services/it-services-software
 
 
