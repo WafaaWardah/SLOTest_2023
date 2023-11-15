@@ -24,8 +24,9 @@ https://thefragebogen.de/
 
 
 ## Important tasks
-- Participant recruitment portal (Beyda) https://www.tu.berlin/ipa/einrichtungen-services/it-services-software
+- Participant recruitment portal (Aylin) https://www.tu.berlin/ipa/einrichtungen-services/it-services-software
 - Compensation Money (Wafaa)
+- Check time slots
 ### Experimental Rooms (Nautilus/Safari/..)
 - Laptop for Ratings
 -  Headphone
