@@ -18,21 +18,17 @@ https://hackmd.io/cb8IFxXeRgSicYoMVjLfNw?both
 * Beyda : boran@campus.tu-berlin.de
 
 
-## Participant Portal
-https://www.tu.berlin/ipa/einrichtungen-services/it-services-software
-
-
 ## The Fragebogen 
 (Optional platform to explore)
 https://thefragebogen.de/ 
 
 
 ## Important tasks
-- Participant recruitment portal (Beyda)
+- Participant recruitment portal (Beyda) https://www.tu.berlin/ipa/einrichtungen-services/it-services-software
 - Compensation Money (Wafaa)
-- Headphone
 ### Experimental Rooms (Nautilus/Safari/..)
 - Laptop for Ratings
+-  Headphone
 - Water
 - Tissue towels, ..?
 - Volume Adjustment by listener? NO
