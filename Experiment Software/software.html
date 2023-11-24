@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Experiment software</title>
+        <link rel="stylesheet" type="text/css" href="experiment.css">
+
+        <style>
+            .questionnaireItem {
+                width: 40em;
+                margin-left: auto;
+                margin-right: auto;
+    
+                border-style: inset;
+                background-color: Snow;
+                padding: 0.5em;
+            }
+    
+            *[class*='Required'] {
+                outline: none;
+                border-color: red;
+                box-shadow: 0 0 1em red;
+            }
+    
+            .screenPreview table {
+                width: 100%;
+                border-collapse: collapse;
+                word-break: break-all;
+            }
+    
+            .screenPreview table td,
+            .screenPreview table th {
+                font-size: 1em;
+                border: 1px solid #98bf21;
+                padding: 3px 7px 2px 7px;
+            }
+    
+            .screenPreview table th {
+                font-size: 1.1em;
+                text-align: left;
+                padding-top: 5px;
+                padding-bottom: 4px;
+                background-color: #A7C942;
+                color: #ffffff;
+            }
+    
+            .screenPreview table tr.alt td {
+                color: #000000;
+                background-color: #EAF2D3;
+            }
+    
+            .iframe {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+    
+                margin: 0;
+                padding: 0;
+    
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+    
+                overflow: hidden;
+            }
+    
+        </style>
+
+        <script src="thefragebogen.js"></script>
+
+        <script>
+
+        var screens = [];
+
+        var WelcomeScreen = new ScreenUIElements(
+            new UIElementHTML(undefined, "<h1>Welcome to the Experiment</h1>"),
+            new UIElementHTML(undefined, "Start first Questionnaire"),
+        );
+
+        screens.push(WelcomeScreen);
+
+        var AudioSampleScreen = new ScreenUIElements(
+            new UIElementHTML(undefined, "<h1>Audio sample 1</h1>"),
+            new QuestionnaireItemMediaAudioRepeatable(undefined, "You need to listen to the whole sample to continue", true, "audio_files/test.mp3",true, "Replay"),
+            new QuestionnaireItemSVGNASATLX("max-width", "<h2>Option1</h2>", false, "Bad", "Excellent"),
+            new QuestionnaireItemDefinedOne(
+                "questionnaireItem", 
+                "<h2>Option2</h2>Defintion?", 
+                true, 
+                ["Bad", "Poor", "Fair", "Good", "Excellent"]),
+            new QuestionnaireItemDefinedRange("questionnaireItem", "<h2>Option3</h2>", false, 1, 5),
+        );
+
+        screens.push(AudioSampleScreen);
+        
+        var EndScreen = new ScreenWaitDataDownload(undefined, "Thank you for participating <br> <a href='post_questionnaire.html'> Continue with final questionnaire </a>", "Test.csv", false);
+        
+        screens.push(EndScreen);
+
+        var screenController = new ScreenController(screens);
+
+        </script>
+
+        <script>
+        function start() {
+            document.body.innerHTML += "";
+            if (typeof(screenController) === "undefined") {
+                document.body.innerHTML += "<br><i>Something went wrong:</i> Please check the configuration.";
+                return;
+            }
+
+            screenController.init(document.body);
+            screenController.preload("<br><b>Preloading media files<br><progress></progress>"); 
+        }
+
+        </script>
+    </head>
+
+    <body onload="start()">
+        <p>
+            Loading...
+        </p>
+    </body>
+
+</html>

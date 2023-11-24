@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Experiment software</title>
+        <link rel="stylesheet" type="text/css" href="example.css">
+
+        <style>
+            .questionnaireItem {
+                width: 40em;
+                margin-left: auto;
+                margin-right: auto;
+    
+                border-style: inset;
+                background-color: Snow;
+                padding: 0.5em;
+            }
+    
+            *[class*='Required'] {
+                outline: none;
+                border-color: red;
+                box-shadow: 0 0 1em red;
+            }
+    
+            .screenPreview table {
+                width: 100%;
+                border-collapse: collapse;
+                word-break: break-all;
+            }
+    
+            .screenPreview table td,
+            .screenPreview table th {
+                font-size: 1em;
+                border: 1px solid #98bf21;
+                padding: 3px 7px 2px 7px;
+            }
+    
+            .screenPreview table th {
+                font-size: 1.1em;
+                text-align: left;
+                padding-top: 5px;
+                padding-bottom: 4px;
+                background-color: #A7C942;
+                color: #ffffff;
+            }
+    
+            .screenPreview table tr.alt td {
+                color: #000000;
+                background-color: #EAF2D3;
+            }
+    
+            .iframe {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+    
+                margin: 0;
+                padding: 0;
+    
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+    
+                overflow: hidden;
+            }
+    
+        </style>
+
+        <script src="../src/helper_download.js"></script>
+
+        <script src="../src/logger_console.js"></script>
+
+        <script src="../src/paginateui.js"></script>
+
+        <script src="../src/screen.js"></script>
+
+        <script src="../src/screencontroller.js"></script>
+
+        <script src="../src/uielement.js"></script>
+
+        <script src="../src/paginateui_button.js"></script>
+
+        <script src="../src/screen_data_preview.js"></script>
+
+        <script src="../src/screen_iframe.js"></script>
+
+        <script src="../src/screen_uielements.js"></script>
+
+        <script src="../src/screen_wait.js"></script>
+
+        <script src="../src/uielement_button.js"></script>
+
+        <script src="../src/uielement_html.js"></script>
+
+        <script src="../src/uielement_interactive.js"></script>
+
+        <script src="../src/questionnaireitem.js"></script>
+
+        <script src="../src/screen_uielements_auto.js"></script>
+
+        <script src="../src/screen_uielements_sequential.js"></script>
+
+        <script src="../src/screen_wait_data.js"></script>
+
+        <script src="../src/questionnaireitem_date.js"></script>
+
+        <script src="../src/questionnaireitem_defined.js"></script>
+
+        <script src="../src/questionnaireitem_media.js"></script>
+
+        <script src="../src/questionnaireitem_svg.js"></script>
+
+        <script src="../src/questionnaireitem_system.js"></script>
+
+        <script src="../src/questionnaireitem_text_area.js"></script>
+
+        <script src="../src/questionnaireitem_text.js"></script>
+
+        <script src="../src/questionnaireitem_wait_websocket.js"></script>
+
+        <script src="../src/questionnaireitem_system_wait.js"></script>
+
+        <script src="../src/questionnaireitem_write.js"></script>
+
+        <script src="../src/screen_wait_data_download.js"></script>
+
+        <!-- <script src="../src/screen_wait_data_upload.js"></script> -->
+
+        <script src="../src/questionnaireitem_defined_multi.js"></script>
+
+        <script src="../src/questionnaireitem_defined_one.js"></script>
+
+        <script src="../src/questionnaireitem_defined_range.js"></script>
+
+        <script src="../src/questionnaireitem_defined_selector.js"></script>
+
+        <script src="../src/questionnaireitem_media_audio.js"></script>
+
+        <script src="../src/questionnaireitem_media_audio_repeatable.js"></script>
+
+        <!-- <script src="../src/questionnaireitem_media_image.js"></script> -->
+
+        <!-- <script src="../src/questionnaireitem_media_video.js"></script> -->
+
+        <script src="../src/questionnaireitem_svg_nasatlx.js"></script>
+
+        <script src="../src/questionnaireitem_svg_quality7pt.js"></script>
+
+        <script src="../src/questionnaireitem_svg_visualanalogue.js"></script>
+
+        <!-- <script src="../src/questionnaireitem_system_const.js"></script>
+
+        <script src="../src/questionnaireitem_system_screen_date_time.js"></script>
+
+        <script src="../src/questionnaireitem_system_screen_duration.js"></script>
+
+        <script src="../src/questionnaireitem_system_viewport_size.js"></script>
+
+        <script src="../src/questionnaireitem_system_focus.js"></script>
+
+        <script src="../src/questionnaireitem_system_url.js"></script> -->
+
+        <script>
+
+        var screens = [];
+
+        var WelcomeScreen = new ScreenUIElements(
+            new UIElementHTML(undefined, "<h1>Welcome to the Experiment</h1>"),
+            new UIElementHTML(undefined, "Start first Questionnaire"),
+        );
+
+        screens.push(WelcomeScreen);
+
+        var PreTestQuestionaire = new ScreenUIElements(
+            new UIElementHTML(undefined, "<h1>Pretest Questionnaire</h1>"),
+            new UIElementHTML(undefined, "Please answer the following questions to continue"),
+            new QuestionnaireItemDate("questionnaireItem", "<b>Date of birth</b>", false),
+            new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Gender</b>", true,["Male", "Female", "Diverse"]),
+            new QuestionnaireItemDefinedMulti("questionnaireItem", "<b>Hearing impairement</b>", true,["Option1", "Option2", "Else"]),
+        );
+
+        screens.push(PreTestQuestionaire);
+
+        var AudioSampleScreen = new ScreenUIElements(
+            new UIElementHTML(undefined, "<h1>Audio sample 1</h1>"),
+            new QuestionnaireItemMediaAudioRepeatable(undefined, "You need to listen to the whole sample to continue", true, "../audio_files/test.mp3",true, "Replay"),
+            new QuestionnaireItemSVGQuality7pt("max-width", "<h2>Option1</h2>", false),
+            new QuestionnaireItemDefinedOne(
+                "questionnaireItem", 
+                "<h2>Option2</h2>Defintion?", 
+                true, 
+                ["Bad", "Poor", "Fair", "Good", "Excellent"]),
+            new QuestionnaireItemDefinedRange("questionnaireItem", "<h2>Option3</h2>", false, 1, 5),
+        );
+
+        screens.push(AudioSampleScreen);
+        
+        var EndScreen = screens.push(new ScreenWaitDataDownload(undefined, "Thank you for participating", "Test.csv", false));
+        
+        screens.push(EndScreen);
+
+        var screenController = new ScreenController(screens);
+
+        </script>
+
+        <script>
+        function start() {
+            document.body.innerHTML += "";
+            if (typeof(screenController) === "undefined") {
+                document.body.innerHTML += "<br><i>Something went wrong:</i> Please check the configuration.";
+                return;
+            }
+
+            screenController.init(document.body);
+            screenController.preload("<br><b>Preloading media files<br><progress></progress>"); 
+        }
+
+        </script>
+    </head>
+
+    <body onload="start()">
+        <p>
+            Loading...
+        </p>
+    </body>
+
+</html>
