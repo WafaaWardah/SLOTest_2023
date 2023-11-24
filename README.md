@@ -5,6 +5,8 @@
 ## Meeting Notes
 https://hackmd.io/cb8IFxXeRgSicYoMVjLfNw?both
 
+https://ittuberlin-my.sharepoint.com/personal/0620602321246435_msopseudo_tu-berlin_de/Documents/Timeline%20Project.pptx?web=1
+
 ## Team
 * Jabora
 * Ben
