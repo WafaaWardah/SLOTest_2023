@@ -20,6 +20,10 @@ https://ittuberlin-my.sharepoint.com/personal/0620602321246435_msopseudo_tu-berl
 * Beyda : boran@campus.tu-berlin.de
 
 
+## Sample Degraded Dataset
+[Sample dataset](https://drive.google.com/drive/folders/1ZUaLmpn4vpcoLtb1JIcP4CugVpr_yqLB?usp=sharing)
+
+
 ## The Fragebogen 
 (Optional platform to explore)
 https://thefragebogen.de/ 
