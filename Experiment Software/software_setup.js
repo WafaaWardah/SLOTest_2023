@@ -11,18 +11,32 @@ function setupScreens(){
     screens.push(WelcomeScreen);
 
     var PreTestQuestionaire = new ScreenUIElements(
-        new UIElementHTML(undefined, "<h1>Pretest Questionnaire</h1>"),
-        new UIElementHTML(undefined, "Please answer the following questions to continue"),
-        new QuestionnaireItemDate("questionnaireItem", "<b>Date of birth</b>", false),
-        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Gender</b>", true,["Male", "Female", "Diverse"]),
-        new QuestionnaireItemDefinedMulti("questionnaireItem", "<b>Hearing impairement</b>", true,["Option1", "Option2", "Else"]),
+        new UIElementHTML(undefined, "<h1>Vorbefragung</h1>"),
+        new UIElementHTML(undefined, "Bitte beantworten Sie die folgenden Fragen"),
+        new QuestionnaireItemDate("questionnaireItem", "<b>Wie alt sind Sie?", true),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Wie würden Sie Ihre Deutschkenntnisse einschätzen?", true,["Muttersprache", "C1/2 (Verhandlungssicher)", "B1/2 (Gesprächssicher)"]),
+        new QuestionnaireItemText("questionnaireItem", "Was ist Ihre Muttersprache?", false),
+        new QuestionnaireItemDefinedMulti("questionnaireItem", "<b>Welche der folgenden Kommunikationsformen nutzen Sie regelmäßig (mehrmals im Monat)?", true,["Telefonie über Netz", "Telefonie über Internet", "Videotelefonie", "Videokonferenzen (Zoom etc.)"]),
+        new QuestionnaireItemText("questionnaireItem", "Wieviele Stunden pro Woche nutzen Sie diese Kommunikationsmittel geschäftlich?", false),
+        new QuestionnaireItemText("questionnaireItem", "Wieviele Stunden pro Woche nutzen Sie diese Kommunikationsmittel privat?", false),
+        new QuestionnaireItemSVGVisualAnalogueScale("questionnaireItem", "<b>Wie sind Ihre bisherigen Erfahrungen mit Telefonie?", true, "sehr gut", "sehr schlecht"),
+        new QuestionnaireItemDefinedMulti("questionnaireItem", "<b>Welche Medien nutzen Sie regelmäßig (mehrmals im Monat)?", true,["Social Media", "Zeitung", "Fernsehen", "Radio"]),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie schon einmal an einem Hörtest/-experiment teilgenommen?", true,["Ja", "Nein"]),
+        new QuestionnaireItemText("questionnaireItem", "Wenn ja: Wann?", false),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie regelmäßig (z.B. über Ihre Arbeit) mit Hör- und Audiotechnik, -verfahren oder -forschung zu tun?", true, ["Ja", "Nein"]),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "Wenn Nein: Hatten Sie früher einmal damit zu tun?", false, ["Ja", "Nein"]),
+        new QuestionnaireItemText("questionnaireItem", "Wenn ja: Wann? (Jahr)", false),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie Seh-, Konzentrations- oder Hörschwächen?", true, ["Ja", "Nein"]),
+        new QuestionnaireItemText("questionnaireItem", "Wenn ja: Welche?", false),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "Benutzen Sie Hilfsmittel?", false, ["Ja", "Nein"]),
+        new QuestionnaireItemText("questionnaireItem", "Wenn ja: Welche?", false),
     );
 
     screens.push(PreTestQuestionaire);
 
     var AudioSampleScreen = new ScreenUIElements(
         new UIElementHTML(undefined, "<h1>Hörbeispiel 1</h1>"),
-        new QuestionnaireItemMediaAudio(undefined, "Sie müssen sich die gesamte Audiodatei anhören um fortzufahren!", true, "audio_files/test.mp3"),
+        new QuestionnaireItemMediaAudioRepeatable(undefined, "Sie müssen sich die gesamte Audiodatei anhören um fortzufahren!", true, "audio_files/test.mp3", true, "Replay"),
         new QuestionnaireItemDefinedOne(
             "questionnaireItem", 
             "<h2>Overall quality</h2> Bitte bewerten sie die Gesamtqualität", 
@@ -54,11 +68,20 @@ function setupScreens(){
     screens.push(AudioSampleScreen);
 
     var PostTestQuestionaire = new ScreenUIElements(
-        new UIElementHTML(undefined, "<h1>Posttest Questionnaire</h1>"),
-        new UIElementHTML(undefined, "Please answer the following questions to continue"),
-        new QuestionnaireItemDate("questionnaireItem", "<b>Date of birth</b>", false),
-        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Gender</b>", true,["Male", "Female", "Diverse"]),
-        new QuestionnaireItemDefinedMulti("questionnaireItem", "<b>Hearing impairement</b>", true,["Option1", "Option2", "Else"]),
+        new UIElementHTML(undefined, "<h1>Nachbefragung</h1>"),
+        new UIElementHTML(undefined, "Bitte beantworten Sie die folgenden Fragen"),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Wie identifizieren Sie sich?", true,["männlich", "weiblich", "intersexuell/divers", "keine Angabe"]),
+        new QuestionnaireItemSVGVisualAnalogueScale("questionnaireItem", "<b>Fühlen Sie sich romantisch zu Frauen bzw. weiblichen/femininen Personen hingezogen?", true, "große Anziehungskraft", "keine Anziehungskraft"),
+        new QuestionnaireItemSVGVisualAnalogueScale("questionnaireItem", "<b>Fühlen Sie sich romantisch zu Männern bzw. männlichen/maskulinen Personen hingezogen?", true, "große Anziehungskraft", "keine Anziehungskraft"),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Was ist Ihr höchster erreichter Bildungsabschluss?", true, ["Noch in schulischer Ausbildung", "Fachhochschul- oder Hochschulreife", "Haupt- (Volks)schulabschluss", "Universitäts- oder Fachhochschulabschluss","Realschul- oder gleichwertiger Abschluss", "Ausbildung"]),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Sind Sie hungrig?", true, ["Ja", "Nein"]),
+        new QuestionnaireItemText("questionnaireItem", "<b>Wann haben Sie zuletzt gegessen?", true),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Hatten oder haben Sie heute Zeitdruck?", true, ["Ja", "Nein"]),
+        new QuestionnaireItemText("questionnaireItem", "Wenn ja: Wann?", false),
+        new QuestionnaireItemSVGVisualAnalogueScale("questionnaireItem", "<b>Wie wichtig ist Ihnen Audio- bzw. Telefonqualität?", true, "sehr wichtig", "völlig unwichtig"),
+        new QuestionnaireItemText("questionnaireItem", "<b>Wie fühlen Sie sich heute?", true),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Hat sich Ihre Stimmung während der Befragung geändert?", true, ["Ja", "Nein"]),
+        new QuestionnaireItemText("questionnaireItem", "Wenn ja: An welcher Stelle?", false),
     );
 
     screens.push(PostTestQuestionaire);
