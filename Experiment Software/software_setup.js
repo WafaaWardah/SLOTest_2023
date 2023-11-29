@@ -4,8 +4,8 @@ let testID;
 
 function setupScreens(){
     var WelcomeScreen = new ScreenUIElements(
-        new UIElementHTML(undefined, "<h1>Welcome to the Experiment</h1>"),
-        new UIElementHTML(undefined, "Start first Questionnaire"),
+        new UIElementHTML(undefined, "<h1>Willkommen zum Experiment</h1>"),
+        new UIElementHTML(undefined, "some introduction text..."),
     );
 
     screens.push(WelcomeScreen);
@@ -13,10 +13,10 @@ function setupScreens(){
     var PreTestQuestionaire = new ScreenUIElements(
         new UIElementHTML(undefined, "<h1>Vorbefragung</h1>"),
         new UIElementHTML(undefined, "Bitte beantworten Sie die folgenden Fragen"),
-        new QuestionnaireItemDate("questionnaireItem", "<b>Wie alt sind Sie?", true),
+        new QuestionnaireItemText("questionnaireItem", "<b>Wie alt sind Sie?", true),
         new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Wie würden Sie Ihre Deutschkenntnisse einschätzen?", true,["Muttersprache", "C1/2 (Verhandlungssicher)", "B1/2 (Gesprächssicher)"]),
         new QuestionnaireItemText("questionnaireItem", "Was ist Ihre Muttersprache?", false),
-        new QuestionnaireItemDefinedMulti("questionnaireItem", "<b>Welche der folgenden Kommunikationsformen nutzen Sie regelmäßig (mehrmals im Monat)?", true,["Telefonie über Netz", "Telefonie über Internet", "Videotelefonie", "Videokonferenzen (Zoom etc.)"]),
+        new QuestionnaireItemDefinedMulti("questionnaireItem", "<b>Welche der folgenden Kommunikationsformen nutzen Sie regelmäßig (mehrmals im Monat)?", true,["Telefonie über Netz", "Telefonie über Internet", "Videotelefonie", "Videokonferenzen (Zoom etc.)", "keine der genannten"]),
         new QuestionnaireItemText("questionnaireItem", "Wieviele Stunden pro Woche nutzen Sie diese Kommunikationsmittel geschäftlich?", false),
         new QuestionnaireItemText("questionnaireItem", "Wieviele Stunden pro Woche nutzen Sie diese Kommunikationsmittel privat?", false),
         new QuestionnaireItemSVGVisualAnalogueScale("questionnaireItem", "<b>Wie sind Ihre bisherigen Erfahrungen mit Telefonie?", true, "sehr gut", "sehr schlecht"),
@@ -36,7 +36,7 @@ function setupScreens(){
 
     var AudioSampleScreen = new ScreenUIElements(
         new UIElementHTML(undefined, "<h1>Hörbeispiel 1</h1>"),
-        new QuestionnaireItemMediaAudioRepeatable(undefined, "Sie müssen sich die gesamte Audiodatei anhören um fortzufahren!", true, "audio_files/test.mp3", true, "Replay"),
+        new QuestionnaireItemMediaAudioRepeatable(undefined, "Sie müssen sich die gesamte Audiodatei anhören um fortzufahren!", true, "audio_files/ref/for_cnv_f_0004_01.wav", true, "Replay"),
         new QuestionnaireItemDefinedOne(
             "questionnaireItem", 
             "<h2>Overall quality</h2> Bitte bewerten sie die Gesamtqualität", 
