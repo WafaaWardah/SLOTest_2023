@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+A Screen is a UI component that shows a UI.
+It represents a sheet of paper containing several items of a questionnaire.
+In TheFragebogen only one screen is shown at a time.
+
+@abstract
+@class Screen
+*/
+class Screen {
+
+    /**
+    @param {string} [className] CSS class
+    */
+    constructor(className) {
+        this.className = className;
+
+        this.paginateCallback = null;
+        this.preloadedCallback = null;
+        this.preloaded = true;
+
+        this.node = null;
+    }
+
+    /**
+    @returns {boolean} true if the UI is created, false if not
+    */
+    isUIcreated() {
+        return this.node !== null;
+    }
+
+    /**
+    Creates the UI.
+    @abstract
+    */
+    createUI() {}
+
+    /**
+    Applies the set className.
+    Usually called during createUI().
+    */
+    applyCSS() {
+        if (this.isUIcreated() &amp;&amp; this.className !== undefined) {
+            this.node.className = this.className;
+        }
+    }
+
+    /**
+    (optional) Inform the screen its UI gets shown.
+    @abstract
+    */
+    start() {}
+
+    /**
+    Destroy and release the UI.
+    */
+    releaseUI() {
+        TheFragebogen.logger.info(this.constructor.name + ".releaseUI()", "");
+        this.node = null;
+    }
+
+    /**
+    Returns the stored data.
+    @abstract
+    @returns {array&lt;array>}
+    */
+    getData() {}
+
+    /**
+    Set the callback for ready-state changed.
+    @param {function} [callback]
+    */
+    setPaginateCallback(callback) {
+        if (!(callback instanceof Function)) {
+            TheFragebogen.logger.error(this.constructor.name + ".setPaginateCallback()", "Provided callback ist not a function.");
+            return false;
+        }
+
+        TheFragebogen.logger.debug(this.constructor.name + ".setPaginateCallback()", "called.");
+        this.paginateCallback = callback;
+        return true;
+    }
+
+    /**
+    Call this.paginateCallback().
+    @param {number} [relativeScreenId=1] The relative id of the next screen.
+    @param {boolean} [isReadyRequired=true] Only send the event if `this.isReady() === true`.
+    */
+    _sendPaginateCallback(relativeScreenId, isReadyRequired) {
+        relativeScreenId = relativeScreenId === undefined ? 1 : relativeScreenId;
+        isReadyRequired = isReadyRequired === undefined ? true : isReadyRequired;
+
+        if (!(this.paginateCallback instanceof Function)) {
+            TheFragebogen.logger.error(this.constructor.name + "._sendPaginateCallback()", "called, but no paginateCallback set.");
+            return;
+        }
+
+        if (isReadyRequired &amp;&amp; !this.isReady()) {
+            TheFragebogen.logger.info(this.constructor.name + "._sendPaginateCallback()", "called while screen is not ready but isReadyRequired is set.");
+            return;
+        }
+
+        TheFragebogen.logger.debug(this.constructor.name + "._sendPaginateCallback()", "called");
+        this.paginateCallback(this, relativeScreenId);
+    }
+
+    /**
+    Is the screen ready and TheFragebogen can continue to the next one?
+    @abstract
+    @returns {boolean} true Is the screen ready?
+    */
+    isReady() {
+        return true;
+    }
+
+    /**
+    Sets the `PaginateUI` for the screen.
+    NOTE: Can only be called successfully if `screen.createUI()` is `false`.
+    NOTE: This function is _only_ implemented by screens that provide _manual_ pagination.
+    @abstract
+    @param {function} [paginateUI] Set the `PaginateUI` to be used. Set `null` for no `paginateUI`.
+    @returns {boolean} Setting the PaginateUI was successful?
+    */
+    setPaginateUI(paginateUI) {
+        TheFragebogen.logger.warn(this.constructor.name + ".setPaginateUI()", "This method might need to be overridden.");
+        return false;
+    }
+
+    /**
+    Starts preloading external media.
+    Default implementation immediately sends callback `Screen._sendOnPreloadedCallback()`.
+    @abstract
+    */
+    preload() {
+        TheFragebogen.logger.debug(this.constructor.name + ".preload()", "Must be overridden for preloading.");
+        this._sendOnPreloadedCallback();
+    }
+
+    /**
+    All external resources loaded?
+    @abstract
+    @returns {boolean}
+    */
+    isPreloaded() {
+        return this.preloaded;
+    }
+
+    /**
+     Calls the function defined by setOnPreloadedCallback()
+     */
+    _sendOnPreloadedCallback() {
+        if (!(this.preloadedCallback instanceof Function)) {
+            TheFragebogen.logger.error(this.constructor.name + "._sendOnPreloadedCallback()", "called, but no preloadedCallback set.");
+            return;
+        }
+        this.preloadedCallback();
+    }
+
+    /**
+     Sets a preloadedCallback function to be called when screen preloading
+     is finished.
+     */
+    setOnPreloadedCallback(preloadedCallback) {
+        if (!(preloadedCallback instanceof Function)) {
+            TheFragebogen.logger.error(this.constructor.name + ".setOnPreloadedCallback()", "No callback handle given.");
+            return false;
+        }
+
+        TheFragebogen.logger.debug(this.constructor.name + ".setOnPreloadedCallback()", "called");
+        this.preloadedCallback = preloadedCallback;
+        return true;
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LogConsole.html">LogConsole</a></li><li><a href="LogMessage.html">LogMessage</a></li><li><a href="PaginateUI.html">PaginateUI</a></li><li><a href="PaginateUIButton.html">PaginateUIButton</a></li><li><a href="QuestionnaireItem.html">QuestionnaireItem</a></li><li><a href="QuestionnaireItemDate.html">QuestionnaireItemDate</a></li><li><a href="QuestionnaireItemDefined.html">QuestionnaireItemDefined</a></li><li><a href="QuestionnaireItemDefinedMulti.html">QuestionnaireItemDefinedMulti</a></li><li><a href="QuestionnaireItemDefinedOne.html">QuestionnaireItemDefinedOne</a></li><li><a href="QuestionnaireItemDefinedRange.html">QuestionnaireItemDefinedRange</a></li><li><a href="QuestionnaireItemDefinedSelector.html">QuestionnaireItemDefinedSelector</a></li><li><a href="QuestionnaireItemMedia.html">QuestionnaireItemMedia</a></li><li><a href="QuestionnaireItemMediaAudio.html">QuestionnaireItemMediaAudio</a></li><li><a href="QuestionnaireItemMediaAudioRepeatable.html">QuestionnaireItemMediaAudioRepeatable</a></li><li><a href="QuestionnaireItemMediaImage.html">QuestionnaireItemMediaImage</a></li><li><a href="QuestionnaireItemMediaVideo.html">QuestionnaireItemMediaVideo</a></li><li><a href="QuestionnaireItemMediaVideoRepeatable.html">QuestionnaireItemMediaVideoRepeatable</a></li><li><a href="QuestionnaireItemSVG.html">QuestionnaireItemSVG</a></li><li><a href="QuestionnaireItemSVGNASATLX.html">QuestionnaireItemSVGNASATLX</a></li><li><a href="QuestionnaireItemSVGQuality7pt.html">QuestionnaireItemSVGQuality7pt</a></li><li><a href="QuestionnaireItemSVGVisualAnalogueScale.html">QuestionnaireItemSVGVisualAnalogueScale</a></li><li><a href="QuestionnaireItemSystem.html">QuestionnaireItemSystem</a></li><li><a href="QuestionnaireItemSystemConst.html">QuestionnaireItemSystemConst</a></li><li><a href="QuestionnaireItemSystemFocus.html">QuestionnaireItemSystemFocus</a></li><li><a href="QuestionnaireItemSystemScreenDateTime.html">QuestionnaireItemSystemScreenDateTime</a></li><li><a href="QuestionnaireItemSystemScreenDuration.html">QuestionnaireItemSystemScreenDuration</a></li><li><a href="QuestionnaireItemSystemURL.html">QuestionnaireItemSystemURL</a></li><li><a href="QuestionnaireItemSystemViewportSize.html">QuestionnaireItemSystemViewportSize</a></li><li><a href="QuestionnaireItemSystemWait.html">QuestionnaireItemSystemWait</a></li><li><a href="QuestionnaireItemText.html">QuestionnaireItemText</a></li><li><a href="QuestionnaireItemTextArea.html">QuestionnaireItemTextArea</a></li><li><a href="QuestionnaireItemWaitWebsocket.html">QuestionnaireItemWaitWebsocket</a></li><li><a href="QuestionnaireItemWrite.html">QuestionnaireItemWrite</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenController.html">ScreenController</a></li><li><a href="ScreenDataPreview.html">ScreenDataPreview</a></li><li><a href="ScreenIFrame.html">ScreenIFrame</a></li><li><a href="ScreenUIElements.html">ScreenUIElements</a></li><li><a href="ScreenUIElementsAuto.html">ScreenUIElementsAuto</a></li><li><a href="ScreenUIElementsSequential.html">ScreenUIElementsSequential</a></li><li><a href="ScreenWait.html">ScreenWait</a></li><li><a href="ScreenWaitData.html">ScreenWaitData</a></li><li><a href="ScreenWaitDataDownload.html">ScreenWaitDataDownload</a></li><li><a href="ScreenWaitDataUpload.html">ScreenWaitDataUpload</a></li><li><a href="UIElement.html">UIElement</a></li><li><a href="UIElementButton.html">UIElementButton</a></li><li><a href="UIElementHTML.html">UIElementHTML</a></li><li><a href="UIElementInteractive.html">UIElementInteractive</a></li><li><a href="UIElementInteractiveDelayedImageSelectable.html">UIElementInteractiveDelayedImageSelectable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#TheFragebogen">TheFragebogen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Nov 17 2023 15:19:08 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

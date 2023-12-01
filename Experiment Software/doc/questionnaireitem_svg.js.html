@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: questionnaireitem_svg.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: questionnaireitem_svg.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+A base class for QuestionnaireItems using a SVG as scale.
+
+The SVG is required to have click-positions representing the potential answers (e.g., path, rect, ellipse).
+Actionlistener are added to these while the id of each answer-element represents the _answer_.
+In addition, the SVG must contain an element `id="cross"` that shows the current answer (if set).
+
+DEVELOPER:
+To implement a new scale:
+1. Create an SVG
+1.1. Add a id=cross
+1.2. Add click-position with _unique_ id (Non-unique ids also work, but setAnswer() will misbehave).
+2. Override _setupSVG(): Set up the SVG and viewbox.
+3. Override _getAnswerElements()
+4. Override getAnswerOptions
+
+ATTENTION:
+Creating the SVG is not straight forward as the cross-element is moved to an answer using transform.
+We had some trouble, if each answer-element had an individual transform (e.g., matrix) instead of an absolute position.
+
+[Inkscape](http://inkscape.org) might add those transform if copy-and-paste is used.
+To remove those transforms group and ungroup all answer-elements in Inkscape.
+
+To test your SVG, you can use the following code (open the SVG in Chrome and open developer mode).
+The cross should be positioned accordingly.
+
+&lt;code>
+const cross=document.getElementById("cross")
+const answerA = document.getElementById('10'); //Change if you use different answer
+
+cross.setAttributeNS(null, "transform", "translate(0,0)"); //Reset cross position
+
+transform = cross.getTransformToElement(answerA)
+crossBB = cross.getBBox()
+answerABB = answerA.getBBox()
+cross.setAttributeNS(null, "transform", "translate(" + (-transform.e + Math.abs(answerABB.x - crossBB.x) - crossBB.width/2 + answerABB.width/2) + ",0)");
+&lt;/code>
+
+@class QuestionnaireItemSVG
+@augments UIElement
+@augments UIElementInteractive
+@augments QuestionnaireItem
+*/
+class QuestionnaireItemSVG extends QuestionnaireItem {
+
+    /**
+    @param {string} [className] CSS class
+    @param {string} question
+    @param {boolean} [required=false]
+    */
+    constructor(className, question, required) {
+        super(className, question, required);
+
+        this.scaleImage = null;
+        this.answerMap = {};
+        this.crossImage = null;
+    }
+
+    _createAnswerNode() {
+        const answerNode = document.createElement("div");
+
+        this.scaleImage = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        this._setupSVG();
+
+        this.crossImage = this.scaleImage.getElementById("cross");
+        //Problem identified here by the tests while using Safari 7.0.6 --- this.crossImage === null
+        if (this.crossImage === null) {
+            answerNode.innerHTML = '"QuestionnaireItemSVG" feature not available in this browser or SVG is not compatible.';
+            this.setAnswer("Browser did not support SVG.");
+            return answerNode;
+        }
+
+        this.crossImage.setAttributeNS(null, "opacity", 0);
+
+        //Attach event listener to clickable areas.
+        const answerElements = this._getAnswerElements();
+
+        for (let i = 0; i &lt; answerElements.length; i++) {
+            if (answerElements[i].id === "cross") {
+                continue;
+            }
+
+            this.answerMap[answerElements[i].id] = answerElements[i];
+            answerElements[i].addEventListener("click", (event) => {
+                this.setAnswer(event.target.id);
+                this.applyAnswerToUI();
+            });
+        }
+
+        answerNode.appendChild(this.scaleImage);
+        return answerNode;
+    }
+
+    /**
+    Setup this.scaleImage by definining the content and the viewbox.
+    1. this.scaleImage.innerHTML = "&lt;svg...>";
+    2. this.scaleImage.setAttribute("viewBox", "0 2 136.76 21.39");
+    */
+    _setupSVG() {
+        TheFragebogen.logger.error(this.constructor.name + "._setupSVG()", "Must be overridden.");
+    }
+
+    /**
+    Returns all clickable elements representing an answer.
+    Every element must have a unique id, which is used as answer.
+    @returns {array}
+    */
+    _getAnswerElements() {
+        TheFragebogen.logger.error(this.constructor.name + "._answerElements()", "Must be overridden.");
+        return [];
+    }
+
+    applyAnswerToUI() {
+        if (!this.isUIcreated()) {
+            return;
+        }
+
+        if (this.getAnswer() === null) {
+            this.crossImage.setAttributeNS(null, "opacity", 0);
+            return;
+        }
+        if (this.answerMap[this.getAnswer()] === undefined) {
+            TheFragebogen.logger.error(this.constructor.name + ".applyAnswerToUI()", "Invalid answer provided: " + this.getAnswer());
+            return;
+        }
+
+        //Displays cross
+        this.crossImage.setAttributeNS(null, "opacity", 1);
+
+        //Reset previous transforms.
+        this.crossImage.setAttributeNS(null, "transform", "translate(0,0)");
+
+        //Move to new position.
+        const answer = this.answerMap[this.getAnswer()];
+        const crossBBox = this.crossImage.getBBox();
+        const answerBBox = answer.getBBox();
+
+        const transform = answer.getScreenCTM().inverse().multiply(this.crossImage.getScreenCTM());
+        const translateX = -transform.e + Math.abs(answerBBox.x - crossBBox.x) - crossBBox.width / 2 + answerBBox.width / 2;
+
+        TheFragebogen.logger.debug(this.constructor.name + ".applyAnswerToUI()", translateX);
+        this.crossImage.setAttributeNS(null, "transform", "translate(" + translateX + ",0)");
+    }
+
+    releaseUI() {
+        super.releaseUI();
+
+        this.scaleImage = null;
+        this.answerMap = {};
+        this.crossImage = null;
+    }
+
+    getAnswerOptions() {
+        TheFragebogen.logger.warn(this.constructor.name + ".getAnswerOptions()", "Should be overriden.");
+        return super.getAnswerOptions();
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LogConsole.html">LogConsole</a></li><li><a href="LogMessage.html">LogMessage</a></li><li><a href="PaginateUI.html">PaginateUI</a></li><li><a href="PaginateUIButton.html">PaginateUIButton</a></li><li><a href="QuestionnaireItem.html">QuestionnaireItem</a></li><li><a href="QuestionnaireItemDate.html">QuestionnaireItemDate</a></li><li><a href="QuestionnaireItemDefined.html">QuestionnaireItemDefined</a></li><li><a href="QuestionnaireItemDefinedMulti.html">QuestionnaireItemDefinedMulti</a></li><li><a href="QuestionnaireItemDefinedOne.html">QuestionnaireItemDefinedOne</a></li><li><a href="QuestionnaireItemDefinedRange.html">QuestionnaireItemDefinedRange</a></li><li><a href="QuestionnaireItemDefinedSelector.html">QuestionnaireItemDefinedSelector</a></li><li><a href="QuestionnaireItemMedia.html">QuestionnaireItemMedia</a></li><li><a href="QuestionnaireItemMediaAudio.html">QuestionnaireItemMediaAudio</a></li><li><a href="QuestionnaireItemMediaAudioRepeatable.html">QuestionnaireItemMediaAudioRepeatable</a></li><li><a href="QuestionnaireItemMediaImage.html">QuestionnaireItemMediaImage</a></li><li><a href="QuestionnaireItemMediaVideo.html">QuestionnaireItemMediaVideo</a></li><li><a href="QuestionnaireItemMediaVideoRepeatable.html">QuestionnaireItemMediaVideoRepeatable</a></li><li><a href="QuestionnaireItemSVG.html">QuestionnaireItemSVG</a></li><li><a href="QuestionnaireItemSVGNASATLX.html">QuestionnaireItemSVGNASATLX</a></li><li><a href="QuestionnaireItemSVGQuality7pt.html">QuestionnaireItemSVGQuality7pt</a></li><li><a href="QuestionnaireItemSVGVisualAnalogueScale.html">QuestionnaireItemSVGVisualAnalogueScale</a></li><li><a href="QuestionnaireItemSystem.html">QuestionnaireItemSystem</a></li><li><a href="QuestionnaireItemSystemConst.html">QuestionnaireItemSystemConst</a></li><li><a href="QuestionnaireItemSystemFocus.html">QuestionnaireItemSystemFocus</a></li><li><a href="QuestionnaireItemSystemScreenDateTime.html">QuestionnaireItemSystemScreenDateTime</a></li><li><a href="QuestionnaireItemSystemScreenDuration.html">QuestionnaireItemSystemScreenDuration</a></li><li><a href="QuestionnaireItemSystemURL.html">QuestionnaireItemSystemURL</a></li><li><a href="QuestionnaireItemSystemViewportSize.html">QuestionnaireItemSystemViewportSize</a></li><li><a href="QuestionnaireItemSystemWait.html">QuestionnaireItemSystemWait</a></li><li><a href="QuestionnaireItemText.html">QuestionnaireItemText</a></li><li><a href="QuestionnaireItemTextArea.html">QuestionnaireItemTextArea</a></li><li><a href="QuestionnaireItemWaitWebsocket.html">QuestionnaireItemWaitWebsocket</a></li><li><a href="QuestionnaireItemWrite.html">QuestionnaireItemWrite</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenController.html">ScreenController</a></li><li><a href="ScreenDataPreview.html">ScreenDataPreview</a></li><li><a href="ScreenIFrame.html">ScreenIFrame</a></li><li><a href="ScreenUIElements.html">ScreenUIElements</a></li><li><a href="ScreenUIElementsAuto.html">ScreenUIElementsAuto</a></li><li><a href="ScreenUIElementsSequential.html">ScreenUIElementsSequential</a></li><li><a href="ScreenWait.html">ScreenWait</a></li><li><a href="ScreenWaitData.html">ScreenWaitData</a></li><li><a href="ScreenWaitDataDownload.html">ScreenWaitDataDownload</a></li><li><a href="ScreenWaitDataUpload.html">ScreenWaitDataUpload</a></li><li><a href="UIElement.html">UIElement</a></li><li><a href="UIElementButton.html">UIElementButton</a></li><li><a href="UIElementHTML.html">UIElementHTML</a></li><li><a href="UIElementInteractive.html">UIElementInteractive</a></li><li><a href="UIElementInteractiveDelayedImageSelectable.html">UIElementInteractiveDelayedImageSelectable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#TheFragebogen">TheFragebogen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Nov 17 2023 15:19:08 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

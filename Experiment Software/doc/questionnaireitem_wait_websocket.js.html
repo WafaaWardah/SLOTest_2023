@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: questionnaireitem_wait_websocket.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: questionnaireitem_wait_websocket.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+This QuestionnaireItem connects to a Websocket server and may
+a) send a message (ignore incoming messages),
+b) wait until a certain message is received, or
+c) a) and b).
+
+Notes:
+* This QuestionnaireItem is _always_ required.
+* Starts connecting on setting `QuestionnaireItemWaitWebsocket.setEnabled(true)`.
+* Automatically tries to reconnect on connection failure: message resend on every reconnect.
+  IMPORTANT: Please note that this approach is brute force and at the moment ignores _permanent failures_ (HTTP: 404) are not handled.
+* After reaching timeout, this element sets itself to ready=true.
+
+
+Uses CSS classes:
+* this.className (Initial before enabling)
+* this.className + "Connecting"
+* this.className + "Connected"
+* this.className + "Reconnecting"
+* this.className + "Ready" (required message received)
+* NOT this.className + "Required" via `Questionnaire.markRequired()`
+
+@class QuestionnaireItemWaitWebsocket
+@augments UIElement
+@augments UIElementInteractive
+@augments QuestionnaireItem
+*/
+class QuestionnaireItemWaitWebsocket extends QuestionnaireItem {
+
+    /**
+    @param {string} [className] CSS class
+
+    @param {string} url The websocket URL, eg., ws://localhost:8080/someLocation.
+    @param {string} [messageReceive=undefined] The message to be waiting for. `undefined`: don't wait.
+    @param {string} [messageSend=undefined] The message to be sent. `undefined`: don't send anything.
+    @param {number} [reconnectAttempts=-1] Number of attempts to reconnect; negative number: forever.
+    @param {number} [timeout=0] Timeout in seconds.
+    */
+    constructor(className, url, messageSend, messageReceive, reconnectAttempts, timeout) {
+        super(className, "", true);
+
+        this.url = url;
+        this.messageSend = messageSend;
+        this.messageReceive = messageReceive;
+
+        if (this.messageSend === undefined &amp;&amp; this.messageReceive === undefined) {
+            TheFragebogen.logger.error("QuestionnaireItemWaitWebsocket()", "messageSend and messageReceive are undefined; this component will not do anything.");
+        }
+
+        this.reconnectAttempts = !isNaN(reconnectAttempts) ? reconnectAttempts : -1;
+        this.timeout = !isNaN(timeout) ? Math.abs(timeout) * 1000 : 0;
+
+        this.websocketConnection = null;
+        this.connectionFailures = 0;
+
+        TheFragebogen.logger.warn("QuestionnaireItemWaitWebsocket()", "Set: url as " + this.url + ", messageSend as" + this.messageSend + ", messageReceive as " + this.messageReceive + "and timeout as " + this.timeout);
+    }
+
+    createUI() {
+        this.node = document.createElement("div");
+        this.uiCreated = true;
+
+        this.applyCSS();
+        return this.node;
+    }
+
+    setEnabled(enabled) {
+        super.setEnabled(enabled);
+
+        if (this.isEnabled()) { //Let's connect (and start timer)!
+            this._handleConnect();
+
+            if (this.timeout !== 0) {
+                this.timeoutHandle = setTimeout(() => this._onTimeout(), this.timeout);
+            }
+        }
+    }
+
+    _handleConnect() {
+        if (this.websocketConnection === null) {
+            this.websocketConnection = new WebSocket(this.url);
+
+            this.applyCSS("Connecting");
+
+            this.websocketConnection.addEventListener("open", () => this._onConnected());
+            this.websocketConnection.addEventListener("message", (event) => this._onMessage(event));
+            this.websocketConnection.addEventListener("error", (event) => this._onWebsocketError(event));
+            this.websocketConnection.addEventListener("close", (event) => this._onWebsocketClose(event));
+        }
+    }
+
+    _onConnected() {
+        this.applyCSS("Connected");
+
+        if (this.messageSend === undefined) {
+            TheFragebogen.logger.info(this.constructor.name + ".connection._onConnected()", "Connection opened.");
+        } else {
+            this.websocketConnection.send(this.messageSend);
+            TheFragebogen.logger.info(this.constructor.name + ".connection._onConnected()", "Connection opened and message &lt;&lt;" + this.messageSend + ">> delivered.");
+        }
+
+        if (this.messageReceive === undefined) {
+            TheFragebogen.logger.info(this.constructor.name + ".connection._onConnected()", "Connection opened.");
+            this.setAnswer(new Date().toString());
+            this.applyCSS("Ready");
+
+            this._sendReadyStateChanged();
+        }
+    }
+
+    _onMessage(event) {
+        if (event.data &amp;&amp; event.data !== this.messageReceive) {
+            TheFragebogen.logger.warn(this.constructor.name + ".connection._onMessage()", "Received unknown message: &lt;&lt;" + event.data + ">>; waiting for &lt;&lt;" + this.messageReceive + ">>");
+            return;
+        }
+
+        TheFragebogen.logger.info(this.constructor.name + ".connection._onMessage()", "Received correct message.");
+        this.setAnswer(new Date().toString());
+        this.applyCSS("Ready");
+
+        this._sendReadyStateChanged();
+    }
+
+    _onWebsocketError(error) {
+        this.applyCSS("Reconnecting");
+        TheFragebogen.logger.warn(this.constructor.name + ".connection._onWebsocketError()", error);
+        //Reconnect handled by onclose
+    }
+
+    _onWebsocketClose() {
+        TheFragebogen.logger.warn(this.constructor.name + ".connection._onWebsocketClose()", "Connection closed.");
+
+        if (this.isReady()) {
+            return;
+        }
+
+        //Retry?
+        if (this.reconnectAttempts === -1 || this.connectionFailures &lt; this.reconnectAttempts) {
+            TheFragebogen.logger.warn(this.constructor.name + ".connection._onWebsocketClose.setTimeout._anonymousFunction()", "Trying to reconnect...");
+
+            this.websocketConnection = null;
+            this._handleConnect();
+
+            return;
+        }
+
+        //Failed permanently: That's bad...
+        TheFragebogen.logger.error(this.constructor.name + ".connection._onWebsocketClose()", "Maximal number of attempts reached. QuestionnaireItemWaitWebsocket will not try to reconnect again!");
+        this.ready = true;
+        this._sendReadyStateChanged();
+    }
+
+    _onTimeout() {
+        this._sendReadyStateChanged();
+
+        TheFragebogen.logger.warn(this.constructor.name + "._onTimeout()", "Waiting got timeout after " + (!this.connectionFailures ? (this.timeout + "ms.") : (this.connectionFailures + " attempt(s).")));
+    }
+
+    markRequired() {
+        //This elements shows its status and is always required.
+    }
+
+    releaseUI() {
+        super.releaseUI();
+
+        clearTimeout(this.timeoutHandle);
+        this.timeoutHandle = null;
+
+        if (this.websocketConnection !== null &amp;&amp; (this.websocketConnection.readyState == WebSocket.CONNECTING || this.websocketConnection.readyState == WebSocket.OPEN)) {
+            this.websocketConnection.onclose = () => TheFragebogen.logger.info(this.constructor.name + ".connection._releaseUI()", "Connection closed.");
+            this.websocketConnection.close();
+        }
+        this.websocketConnection = null;
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LogConsole.html">LogConsole</a></li><li><a href="LogMessage.html">LogMessage</a></li><li><a href="PaginateUI.html">PaginateUI</a></li><li><a href="PaginateUIButton.html">PaginateUIButton</a></li><li><a href="QuestionnaireItem.html">QuestionnaireItem</a></li><li><a href="QuestionnaireItemDate.html">QuestionnaireItemDate</a></li><li><a href="QuestionnaireItemDefined.html">QuestionnaireItemDefined</a></li><li><a href="QuestionnaireItemDefinedMulti.html">QuestionnaireItemDefinedMulti</a></li><li><a href="QuestionnaireItemDefinedOne.html">QuestionnaireItemDefinedOne</a></li><li><a href="QuestionnaireItemDefinedRange.html">QuestionnaireItemDefinedRange</a></li><li><a href="QuestionnaireItemDefinedSelector.html">QuestionnaireItemDefinedSelector</a></li><li><a href="QuestionnaireItemMedia.html">QuestionnaireItemMedia</a></li><li><a href="QuestionnaireItemMediaAudio.html">QuestionnaireItemMediaAudio</a></li><li><a href="QuestionnaireItemMediaAudioRepeatable.html">QuestionnaireItemMediaAudioRepeatable</a></li><li><a href="QuestionnaireItemMediaImage.html">QuestionnaireItemMediaImage</a></li><li><a href="QuestionnaireItemMediaVideo.html">QuestionnaireItemMediaVideo</a></li><li><a href="QuestionnaireItemMediaVideoRepeatable.html">QuestionnaireItemMediaVideoRepeatable</a></li><li><a href="QuestionnaireItemSVG.html">QuestionnaireItemSVG</a></li><li><a href="QuestionnaireItemSVGNASATLX.html">QuestionnaireItemSVGNASATLX</a></li><li><a href="QuestionnaireItemSVGQuality7pt.html">QuestionnaireItemSVGQuality7pt</a></li><li><a href="QuestionnaireItemSVGVisualAnalogueScale.html">QuestionnaireItemSVGVisualAnalogueScale</a></li><li><a href="QuestionnaireItemSystem.html">QuestionnaireItemSystem</a></li><li><a href="QuestionnaireItemSystemConst.html">QuestionnaireItemSystemConst</a></li><li><a href="QuestionnaireItemSystemFocus.html">QuestionnaireItemSystemFocus</a></li><li><a href="QuestionnaireItemSystemScreenDateTime.html">QuestionnaireItemSystemScreenDateTime</a></li><li><a href="QuestionnaireItemSystemScreenDuration.html">QuestionnaireItemSystemScreenDuration</a></li><li><a href="QuestionnaireItemSystemURL.html">QuestionnaireItemSystemURL</a></li><li><a href="QuestionnaireItemSystemViewportSize.html">QuestionnaireItemSystemViewportSize</a></li><li><a href="QuestionnaireItemSystemWait.html">QuestionnaireItemSystemWait</a></li><li><a href="QuestionnaireItemText.html">QuestionnaireItemText</a></li><li><a href="QuestionnaireItemTextArea.html">QuestionnaireItemTextArea</a></li><li><a href="QuestionnaireItemWaitWebsocket.html">QuestionnaireItemWaitWebsocket</a></li><li><a href="QuestionnaireItemWrite.html">QuestionnaireItemWrite</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenController.html">ScreenController</a></li><li><a href="ScreenDataPreview.html">ScreenDataPreview</a></li><li><a href="ScreenIFrame.html">ScreenIFrame</a></li><li><a href="ScreenUIElements.html">ScreenUIElements</a></li><li><a href="ScreenUIElementsAuto.html">ScreenUIElementsAuto</a></li><li><a href="ScreenUIElementsSequential.html">ScreenUIElementsSequential</a></li><li><a href="ScreenWait.html">ScreenWait</a></li><li><a href="ScreenWaitData.html">ScreenWaitData</a></li><li><a href="ScreenWaitDataDownload.html">ScreenWaitDataDownload</a></li><li><a href="ScreenWaitDataUpload.html">ScreenWaitDataUpload</a></li><li><a href="UIElement.html">UIElement</a></li><li><a href="UIElementButton.html">UIElementButton</a></li><li><a href="UIElementHTML.html">UIElementHTML</a></li><li><a href="UIElementInteractive.html">UIElementInteractive</a></li><li><a href="UIElementInteractiveDelayedImageSelectable.html">UIElementInteractiveDelayedImageSelectable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#TheFragebogen">TheFragebogen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Nov 17 2023 15:19:08 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

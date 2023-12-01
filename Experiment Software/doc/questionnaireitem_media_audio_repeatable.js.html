@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: questionnaireitem_media_audio_repeatable.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: questionnaireitem_media_audio_repeatable.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+A QuestionnaireItemMediaAudio that adds a repeat button to the audio
+For other details see {@link QuestionnaireItemMediaAudio}.
+
+@class QuestionnaireItemMediaAudioRepeatable
+@augments UIElement
+@augments UIElementInteractive
+@augments QuestionnaireItem
+@augments QuestionnaireItemMedia
+@augments QuestionnaireItemMediaAudio
+*/
+class QuestionnaireItemMediaAudioRepeatable extends QuestionnaireItemMediaAudio {
+
+    /**
+    @param {string} [className] CSS class
+    @param {string} [question]
+    @param {boolean} [required=false]
+    @param {string|array&lt;string>} url The URL of the media element to be loaded; if supported by the browser also data URI.
+    @param {boolean} required Element must report ready before continue.
+    @param {boolean} [readyOnError=true] Sets ready=true if an error occures.
+    @param {string} buttonCaption The string shown in the replay button.
+    */
+    constructor(className, question, required, url, readyOnError, buttonCaption) {
+        super(className, question, required, url, readyOnError);
+
+        this.buttonCaption = buttonCaption;
+    }
+
+    _createAnswerNode() {
+        const answerNode = super._createAnswerNode();
+
+        var div = document.createElement("div");
+        var button = document.createElement("button");
+        button.innerHTML = this.buttonCaption;
+        button.onclick = () => this._onReplayClick();
+
+        div.appendChild(button);
+        answerNode.appendChild(div);
+
+        return answerNode;
+    }
+
+    _onReplayClick() {
+        this.replay();
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LogConsole.html">LogConsole</a></li><li><a href="LogMessage.html">LogMessage</a></li><li><a href="PaginateUI.html">PaginateUI</a></li><li><a href="PaginateUIButton.html">PaginateUIButton</a></li><li><a href="QuestionnaireItem.html">QuestionnaireItem</a></li><li><a href="QuestionnaireItemDate.html">QuestionnaireItemDate</a></li><li><a href="QuestionnaireItemDefined.html">QuestionnaireItemDefined</a></li><li><a href="QuestionnaireItemDefinedMulti.html">QuestionnaireItemDefinedMulti</a></li><li><a href="QuestionnaireItemDefinedOne.html">QuestionnaireItemDefinedOne</a></li><li><a href="QuestionnaireItemDefinedRange.html">QuestionnaireItemDefinedRange</a></li><li><a href="QuestionnaireItemDefinedSelector.html">QuestionnaireItemDefinedSelector</a></li><li><a href="QuestionnaireItemMedia.html">QuestionnaireItemMedia</a></li><li><a href="QuestionnaireItemMediaAudio.html">QuestionnaireItemMediaAudio</a></li><li><a href="QuestionnaireItemMediaAudioRepeatable.html">QuestionnaireItemMediaAudioRepeatable</a></li><li><a href="QuestionnaireItemMediaImage.html">QuestionnaireItemMediaImage</a></li><li><a href="QuestionnaireItemMediaVideo.html">QuestionnaireItemMediaVideo</a></li><li><a href="QuestionnaireItemMediaVideoRepeatable.html">QuestionnaireItemMediaVideoRepeatable</a></li><li><a href="QuestionnaireItemSVG.html">QuestionnaireItemSVG</a></li><li><a href="QuestionnaireItemSVGNASATLX.html">QuestionnaireItemSVGNASATLX</a></li><li><a href="QuestionnaireItemSVGQuality7pt.html">QuestionnaireItemSVGQuality7pt</a></li><li><a href="QuestionnaireItemSVGVisualAnalogueScale.html">QuestionnaireItemSVGVisualAnalogueScale</a></li><li><a href="QuestionnaireItemSystem.html">QuestionnaireItemSystem</a></li><li><a href="QuestionnaireItemSystemConst.html">QuestionnaireItemSystemConst</a></li><li><a href="QuestionnaireItemSystemFocus.html">QuestionnaireItemSystemFocus</a></li><li><a href="QuestionnaireItemSystemScreenDateTime.html">QuestionnaireItemSystemScreenDateTime</a></li><li><a href="QuestionnaireItemSystemScreenDuration.html">QuestionnaireItemSystemScreenDuration</a></li><li><a href="QuestionnaireItemSystemURL.html">QuestionnaireItemSystemURL</a></li><li><a href="QuestionnaireItemSystemViewportSize.html">QuestionnaireItemSystemViewportSize</a></li><li><a href="QuestionnaireItemSystemWait.html">QuestionnaireItemSystemWait</a></li><li><a href="QuestionnaireItemText.html">QuestionnaireItemText</a></li><li><a href="QuestionnaireItemTextArea.html">QuestionnaireItemTextArea</a></li><li><a href="QuestionnaireItemWaitWebsocket.html">QuestionnaireItemWaitWebsocket</a></li><li><a href="QuestionnaireItemWrite.html">QuestionnaireItemWrite</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenController.html">ScreenController</a></li><li><a href="ScreenDataPreview.html">ScreenDataPreview</a></li><li><a href="ScreenIFrame.html">ScreenIFrame</a></li><li><a href="ScreenUIElements.html">ScreenUIElements</a></li><li><a href="ScreenUIElementsAuto.html">ScreenUIElementsAuto</a></li><li><a href="ScreenUIElementsSequential.html">ScreenUIElementsSequential</a></li><li><a href="ScreenWait.html">ScreenWait</a></li><li><a href="ScreenWaitData.html">ScreenWaitData</a></li><li><a href="ScreenWaitDataDownload.html">ScreenWaitDataDownload</a></li><li><a href="ScreenWaitDataUpload.html">ScreenWaitDataUpload</a></li><li><a href="UIElement.html">UIElement</a></li><li><a href="UIElementButton.html">UIElementButton</a></li><li><a href="UIElementHTML.html">UIElementHTML</a></li><li><a href="UIElementInteractive.html">UIElementInteractive</a></li><li><a href="UIElementInteractiveDelayedImageSelectable.html">UIElementInteractiveDelayedImageSelectable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#TheFragebogen">TheFragebogen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Nov 17 2023 15:19:08 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

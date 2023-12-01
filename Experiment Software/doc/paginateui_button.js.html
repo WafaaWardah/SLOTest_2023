@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: paginateui_button.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: paginateui_button.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code> /**
+Provides a UI for pagination between `Screens`.
+
+Implements a button to continue to the following `Screen`.
+
+@class PaginateUIButton
+@augments PaginateUI
+*/
+ class PaginateUIButton extends PaginateUI {
+
+     /**
+     @param {string} [className] CSS class
+     @param {number} [relativeIdNext=undefined] The relativeId of the next screen. If undefined, no back button will be generated.
+     @param {number} [relativeIdback=undefined] The relativeId of the next screen. If undefined, no back button will be generated.
+     @param {string} [labelBack="Back"] The caption for the back-button.
+     @param {string} [labelNext="Next"] The caption for the next-button.
+     */
+     constructor(className, relativeIdBack, relativeIdNext, labelBack, labelNext) {
+         super(className);
+
+         this.relativeIdBack = relativeIdBack;
+         this.relativeIdNext = relativeIdNext;
+         if (this.relativeIdBack === undefined &amp;&amp; this.relativeIdNext === undefined) {
+             TheFragebogen.logger.error(this.constructor.name + "()", "relativeIdBack and relativeIdNext are undefined. No buttons will be created.");
+         }
+         if (typeof(this.relativeIdBack) !== "number" &amp;&amp; typeof(this.relativeIdNext) !== "number") {
+             TheFragebogen.logger.error(this.constructor.name + "()", "relativeIdBack and relativeIdNext should be numbers.");
+         }
+
+         this.labelBack = labelBack === undefined ? "Back" : labelBack;
+         this.labelNext = labelNext === undefined ? "Next" : labelNext;
+
+         this.node = null;
+     }
+
+     /**
+     @returns {boolean} true if the UI is created, false if not
+     */
+     isUIcreated() {
+         return this.uiCreated;
+     }
+
+     createUI() {
+         this.node = document.createElement("div");
+         this.node.className = this.className;
+
+         if (this.relativeIdBack !== undefined) {
+             const buttonBack = document.createElement("input");
+             buttonBack.type = "button";
+             buttonBack.value = this.labelBack;
+             buttonBack.addEventListener("click", () => this._sendPaginateCallback(this.relativeIdBack));
+             this.node.appendChild(buttonBack);
+         }
+
+         if (this.relativeIdNext !== undefined) {
+             const buttonNext = document.createElement("input");
+             buttonNext.type = "button";
+             buttonNext.value = this.labelNext;
+             buttonNext.addEventListener("click", () => this._sendPaginateCallback(this.relativeIdNext));
+             this.node.appendChild(buttonNext);
+         }
+         return this.node;
+     }
+
+     releaseUI() {
+         this.node = null;
+     }
+ }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LogConsole.html">LogConsole</a></li><li><a href="LogMessage.html">LogMessage</a></li><li><a href="PaginateUI.html">PaginateUI</a></li><li><a href="PaginateUIButton.html">PaginateUIButton</a></li><li><a href="QuestionnaireItem.html">QuestionnaireItem</a></li><li><a href="QuestionnaireItemDate.html">QuestionnaireItemDate</a></li><li><a href="QuestionnaireItemDefined.html">QuestionnaireItemDefined</a></li><li><a href="QuestionnaireItemDefinedMulti.html">QuestionnaireItemDefinedMulti</a></li><li><a href="QuestionnaireItemDefinedOne.html">QuestionnaireItemDefinedOne</a></li><li><a href="QuestionnaireItemDefinedRange.html">QuestionnaireItemDefinedRange</a></li><li><a href="QuestionnaireItemDefinedSelector.html">QuestionnaireItemDefinedSelector</a></li><li><a href="QuestionnaireItemMedia.html">QuestionnaireItemMedia</a></li><li><a href="QuestionnaireItemMediaAudio.html">QuestionnaireItemMediaAudio</a></li><li><a href="QuestionnaireItemMediaAudioRepeatable.html">QuestionnaireItemMediaAudioRepeatable</a></li><li><a href="QuestionnaireItemMediaImage.html">QuestionnaireItemMediaImage</a></li><li><a href="QuestionnaireItemMediaVideo.html">QuestionnaireItemMediaVideo</a></li><li><a href="QuestionnaireItemMediaVideoRepeatable.html">QuestionnaireItemMediaVideoRepeatable</a></li><li><a href="QuestionnaireItemSVG.html">QuestionnaireItemSVG</a></li><li><a href="QuestionnaireItemSVGNASATLX.html">QuestionnaireItemSVGNASATLX</a></li><li><a href="QuestionnaireItemSVGQuality7pt.html">QuestionnaireItemSVGQuality7pt</a></li><li><a href="QuestionnaireItemSVGVisualAnalogueScale.html">QuestionnaireItemSVGVisualAnalogueScale</a></li><li><a href="QuestionnaireItemSystem.html">QuestionnaireItemSystem</a></li><li><a href="QuestionnaireItemSystemConst.html">QuestionnaireItemSystemConst</a></li><li><a href="QuestionnaireItemSystemFocus.html">QuestionnaireItemSystemFocus</a></li><li><a href="QuestionnaireItemSystemScreenDateTime.html">QuestionnaireItemSystemScreenDateTime</a></li><li><a href="QuestionnaireItemSystemScreenDuration.html">QuestionnaireItemSystemScreenDuration</a></li><li><a href="QuestionnaireItemSystemURL.html">QuestionnaireItemSystemURL</a></li><li><a href="QuestionnaireItemSystemViewportSize.html">QuestionnaireItemSystemViewportSize</a></li><li><a href="QuestionnaireItemSystemWait.html">QuestionnaireItemSystemWait</a></li><li><a href="QuestionnaireItemText.html">QuestionnaireItemText</a></li><li><a href="QuestionnaireItemTextArea.html">QuestionnaireItemTextArea</a></li><li><a href="QuestionnaireItemWaitWebsocket.html">QuestionnaireItemWaitWebsocket</a></li><li><a href="QuestionnaireItemWrite.html">QuestionnaireItemWrite</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenController.html">ScreenController</a></li><li><a href="ScreenDataPreview.html">ScreenDataPreview</a></li><li><a href="ScreenIFrame.html">ScreenIFrame</a></li><li><a href="ScreenUIElements.html">ScreenUIElements</a></li><li><a href="ScreenUIElementsAuto.html">ScreenUIElementsAuto</a></li><li><a href="ScreenUIElementsSequential.html">ScreenUIElementsSequential</a></li><li><a href="ScreenWait.html">ScreenWait</a></li><li><a href="ScreenWaitData.html">ScreenWaitData</a></li><li><a href="ScreenWaitDataDownload.html">ScreenWaitDataDownload</a></li><li><a href="ScreenWaitDataUpload.html">ScreenWaitDataUpload</a></li><li><a href="UIElement.html">UIElement</a></li><li><a href="UIElementButton.html">UIElementButton</a></li><li><a href="UIElementHTML.html">UIElementHTML</a></li><li><a href="UIElementInteractive.html">UIElementInteractive</a></li><li><a href="UIElementInteractiveDelayedImageSelectable.html">UIElementInteractiveDelayedImageSelectable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#TheFragebogen">TheFragebogen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Nov 17 2023 15:19:08 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

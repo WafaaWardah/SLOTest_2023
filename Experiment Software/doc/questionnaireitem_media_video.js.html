@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: questionnaireitem_media_video.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: questionnaireitem_media_video.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+A QuestionnaireItemMedia that plays a video.
+NOTE: Useful to capture failure to loads.
+This item reports as an array video playback statistics [url, duration, stallingCount, replayCount, videoStartTimes, videoPlayDurations].
+url corresponds to the array of all sources for this element.
+The duration is the total video length in seconds.
+stallingCount counts how often a stalling event occured.
+replayCount counts how often the video got replayed explicitly by the user.
+videoStartTimes are the points in time, relative to creation of the video, when the video started playing.
+videoPlayDurations are the times in seconds how long the video played each time.
+
+@class QuestionnaireItemMediaVideo
+@augments UIElement
+@augments UIElementInteractive
+@augments QuestionnaireItem
+@augments QuestionnaireItemMedia
+*/
+class QuestionnaireItemMediaVideo extends QuestionnaireItemMedia {
+
+    /**
+    @param {string} [className] CSS class
+    @param {string} [question]
+    @param {boolean} [required=false]
+    @param {string|array&lt;string>} url The URL of the media element to be loaded; if supported by the browser also data URI.
+    @param {boolean} required Element must report ready before continue.
+    @param {boolean} [readyOnError=true] Sets ready=true if an error occures.
+    @param {boolean} [videoPlaysInline=false] Play video within parent element.
+    */
+    constructor(className, question, required, url, readyOnError, videoPlaysInline) {
+        super(className, question, required, url, readyOnError);
+
+        this.videoNode = null;
+
+        this.videoPlayDurations = []; // Stores how long the video got watched each time
+        this.videoCreationTime = null; // Point in time when the video gets created
+        this.videoStartTimes = []; // Stores when the video started relative to videoCreationTime
+        this.replayCount = 0; // Counts how often the video got replayed explicitly with replay()
+        this.videoPlaysInline = videoPlaysInline;
+    }
+
+    _createAnswerNode() {
+        const answerNode = document.createElement("div");
+
+        this._createMediaNode();
+        this.videoCreationTime = new Date().getTime(); // Before play event listener gets set
+
+        answerNode.appendChild(this.videoNode);
+
+        this.videoNode.addEventListener("timeupdate", (event) => this._onProgress(event));
+        this.videoNode.addEventListener("error", (event) => this._onError(event));
+        this.videoNode.addEventListener("ended", () => this._onEnded());
+        this.videoNode.addEventListener("stalled", () => this._onStalled());
+        this.videoNode.addEventListener("play", this._onPlay());
+
+        return answerNode;
+    }
+
+    releaseUI() {
+        this.videoPlayDurations.push(this.videoNode.currentTime);
+        super.releaseUI();
+
+        this.videoNode = null;
+    }
+
+    _loadMedia() {
+        this._createMediaNode();
+    }
+
+    _createMediaNode() {
+        if (this.videoNode !== null) {
+            TheFragebogen.logger.debug(this.constructor.name + "()", "videoNode was already created.");
+            return;
+        }
+
+        this.videoNode = document.createElement('video');
+        if (this.videoPlaysInline) {
+            // Play video within parent element
+            this.videoNode.setAttribute("playsinline", "");
+        }
+        this.videoNode.addEventListener("canplaythrough", () => this._onLoaded());
+
+        for (let i = 0; i &lt; this.url.length; i++) {
+            const videoSource = document.createElement("source");
+            videoSource.src = this.url[i];
+            this.videoNode.appendChild(videoSource);
+        }
+
+        let pTag = document.createElement("p");
+        pTag.innerHTML = "This is a fallback content. Your browser does not support the provided video formats.";
+        this.videoNode.appendChild(pTag);
+    }
+
+    replay() {
+        this.videoPlayDurations.push(this.videoNode.currentTime);
+        this.replayCount += 1;
+
+        this.videoNode.pause();
+        this.videoNode.currentTime = 0.0;
+        this.videoStartTimes.push((new Date().getTime() - this.videoCreationTime) / 1000);
+        this.videoNode.play();
+
+        this._updateAnswer();
+    }
+
+    _play() {
+        if (this.videoNode === null) {
+            TheFragebogen.logger.warn(this.constructor.name + "()", "Cannot start playback without this.videoNode.");
+            return;
+        }
+
+        try {
+            this.videoNode.play();
+        } catch (e) {
+            TheFragebogen.logger.warn(this.constructor.name + "()", "No supported format availble.");
+            this._onError();
+        }
+    }
+
+    _pause() {
+        if (this.videoNode === null) {
+            TheFragebogen.logger.warn(this.constructor.name + "()", "Cannot start playback without this.videoNode.");
+            return;
+        }
+        this.videoNode.pause();
+    }
+
+    _onProgress() {
+        //Nope
+    }
+
+    _onPlay() {
+        this.videoStartTimes.push((new Date().getTime() - this.videoCreationTime) / 1000);
+    }
+
+    _updateAnswer() {
+        this.setAnswer([this.url, this.videoNode.duration, this.stallingCount, this.replayCount, this.videoStartTimes, this.videoPlayDurations]);
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LogConsole.html">LogConsole</a></li><li><a href="LogMessage.html">LogMessage</a></li><li><a href="PaginateUI.html">PaginateUI</a></li><li><a href="PaginateUIButton.html">PaginateUIButton</a></li><li><a href="QuestionnaireItem.html">QuestionnaireItem</a></li><li><a href="QuestionnaireItemDate.html">QuestionnaireItemDate</a></li><li><a href="QuestionnaireItemDefined.html">QuestionnaireItemDefined</a></li><li><a href="QuestionnaireItemDefinedMulti.html">QuestionnaireItemDefinedMulti</a></li><li><a href="QuestionnaireItemDefinedOne.html">QuestionnaireItemDefinedOne</a></li><li><a href="QuestionnaireItemDefinedRange.html">QuestionnaireItemDefinedRange</a></li><li><a href="QuestionnaireItemDefinedSelector.html">QuestionnaireItemDefinedSelector</a></li><li><a href="QuestionnaireItemMedia.html">QuestionnaireItemMedia</a></li><li><a href="QuestionnaireItemMediaAudio.html">QuestionnaireItemMediaAudio</a></li><li><a href="QuestionnaireItemMediaAudioRepeatable.html">QuestionnaireItemMediaAudioRepeatable</a></li><li><a href="QuestionnaireItemMediaImage.html">QuestionnaireItemMediaImage</a></li><li><a href="QuestionnaireItemMediaVideo.html">QuestionnaireItemMediaVideo</a></li><li><a href="QuestionnaireItemMediaVideoRepeatable.html">QuestionnaireItemMediaVideoRepeatable</a></li><li><a href="QuestionnaireItemSVG.html">QuestionnaireItemSVG</a></li><li><a href="QuestionnaireItemSVGNASATLX.html">QuestionnaireItemSVGNASATLX</a></li><li><a href="QuestionnaireItemSVGQuality7pt.html">QuestionnaireItemSVGQuality7pt</a></li><li><a href="QuestionnaireItemSVGVisualAnalogueScale.html">QuestionnaireItemSVGVisualAnalogueScale</a></li><li><a href="QuestionnaireItemSystem.html">QuestionnaireItemSystem</a></li><li><a href="QuestionnaireItemSystemConst.html">QuestionnaireItemSystemConst</a></li><li><a href="QuestionnaireItemSystemFocus.html">QuestionnaireItemSystemFocus</a></li><li><a href="QuestionnaireItemSystemScreenDateTime.html">QuestionnaireItemSystemScreenDateTime</a></li><li><a href="QuestionnaireItemSystemScreenDuration.html">QuestionnaireItemSystemScreenDuration</a></li><li><a href="QuestionnaireItemSystemURL.html">QuestionnaireItemSystemURL</a></li><li><a href="QuestionnaireItemSystemViewportSize.html">QuestionnaireItemSystemViewportSize</a></li><li><a href="QuestionnaireItemSystemWait.html">QuestionnaireItemSystemWait</a></li><li><a href="QuestionnaireItemText.html">QuestionnaireItemText</a></li><li><a href="QuestionnaireItemTextArea.html">QuestionnaireItemTextArea</a></li><li><a href="QuestionnaireItemWaitWebsocket.html">QuestionnaireItemWaitWebsocket</a></li><li><a href="QuestionnaireItemWrite.html">QuestionnaireItemWrite</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenController.html">ScreenController</a></li><li><a href="ScreenDataPreview.html">ScreenDataPreview</a></li><li><a href="ScreenIFrame.html">ScreenIFrame</a></li><li><a href="ScreenUIElements.html">ScreenUIElements</a></li><li><a href="ScreenUIElementsAuto.html">ScreenUIElementsAuto</a></li><li><a href="ScreenUIElementsSequential.html">ScreenUIElementsSequential</a></li><li><a href="ScreenWait.html">ScreenWait</a></li><li><a href="ScreenWaitData.html">ScreenWaitData</a></li><li><a href="ScreenWaitDataDownload.html">ScreenWaitDataDownload</a></li><li><a href="ScreenWaitDataUpload.html">ScreenWaitDataUpload</a></li><li><a href="UIElement.html">UIElement</a></li><li><a href="UIElementButton.html">UIElementButton</a></li><li><a href="UIElementHTML.html">UIElementHTML</a></li><li><a href="UIElementInteractive.html">UIElementInteractive</a></li><li><a href="UIElementInteractiveDelayedImageSelectable.html">UIElementInteractiveDelayedImageSelectable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#TheFragebogen">TheFragebogen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Nov 17 2023 15:19:08 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

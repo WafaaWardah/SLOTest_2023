@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: uielement.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: uielement.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+Abstract controller class for generic UI elements.
+Only provides a set of API that must be implemented by childs.
+
+@abstract
+@class UIElement
+*/
+class UIElement {
+
+    /**
+    @param {string} [className] CSS class
+    */
+    constructor(className) {
+        this.className = className;
+
+        this.uiCreated = false;
+        this.enabled = false;
+        this.visible = true;
+        this.preloaded = true;
+
+        this.preloadedCallback = null;
+        this.node = null;
+    }
+
+    /**
+    @returns {boolean} true if the UI is created, false if not
+    */
+    isUIcreated() {
+        return this.uiCreated;
+    }
+
+    /**
+    Creates the UI of the element.
+    @abstract
+    @return {object}
+    */
+    createUI() {
+        TheFragebogen.logger.debug(this.constructor.name + ".createUI()", "This method must be overridden.");
+    }
+
+    /**
+    Applies the set className.
+    Usually called during createUI().
+    @param {string} cssSuffix A suffix to be added to this.className.
+    */
+    applyCSS(cssSuffix) {
+        if (this.isUIcreated() &amp;&amp; (this.className !== undefined || cssSuffix !== undefined)) {
+            let newClassName = "";
+            newClassName += this.className !== undefined ? this.className : "";
+            newClassName += cssSuffix !== undefined ? cssSuffix : "";
+            this.node.className = newClassName;
+        }
+    }
+
+    /**
+    Destroys the UI.
+    */
+    releaseUI() {
+        this.uiCreated = false;
+        this.enabled = false;
+        this.node = null;
+    }
+
+    /**
+    @return {boolean} Is the UI of this element enabled?
+    */
+    isEnabled() {
+        return this.enabled;
+    }
+
+    /**
+    Setting a component to be enabled incl. UI components.
+    By default disables all childs of this.node.
+    @param {boolean} enabled
+    */
+    setEnabled(enable) {
+        if (!this.isUIcreated()) {
+            return;
+        }
+        this.enabled = enable;
+
+        if (this.node !== null) {
+            const elements = this.node.getElementsByTagName("*");
+            for (let i = 0; i &lt; elements.length; i++) {
+                elements[i].disabled = !this.enabled;
+            }
+        }
+    }
+
+    /**
+    @return {boolean} Is the UI of this element visible?
+    */
+    isVisible() {
+        return this.visible;
+    }
+
+    /**
+    Set UI visible state.
+    @param {boolean} visible
+    */
+    setVisible(visible) {
+        if (!this.isUIcreated()) return;
+
+        this.visible = visible;
+        this.node.style.visibility = visible ? "visible" : "hidden";
+    }
+
+
+    /**
+    @returns {string} The type of this class usually the name of the class.
+    */
+    getType() {
+        return this.constructor.name;
+    }
+
+    /**
+    @abstract
+    @return {boolean} Is the element ready?
+    */
+    isReady() {
+        TheFragebogen.logger.debug(this.constructor.name + ".isReady()", "This method might need to be overridden.");
+        return true;
+    }
+
+    /**
+    Starts preloading external media.
+    Default implementation immedately sends callback `Screen._sendOnScreenPreloadedCallback()`.
+    @abstract
+    */
+    preload() {
+        TheFragebogen.logger.debug(this.constructor.name + ".preload()", "Must be overridden for preloading.");
+        this._sendOnPreloadedCallback();
+    }
+
+    /**
+    All external resources loaded?
+    @returns {boolean}
+    */
+    isPreloaded() {
+        return this.preloaded;
+    }
+
+    /**
+    Set callback to get informed when loading of all required external data is finished.
+    @param {Function}
+    @return {boolean}
+    */
+    setOnPreloadedCallback(preloadedCallback) {
+        if (!(preloadedCallback instanceof Function)) {
+            TheFragebogen.logger.error(this.constructor.name + ".setOnPreloadedCallback()", "No callback handle given.");
+            return false;
+        }
+
+        TheFragebogen.logger.debug(this.constructor.name + ".setOnPreloadedCallback()", "called");
+        this.preloadedCallback = preloadedCallback;
+        return true;
+    }
+
+    /**
+    Sends this.onPreloadCallback() to signalize that all required data could be loaded.
+    @return {boolean}
+    */
+    _sendOnPreloadedCallback() {
+        if (!(this.preloadedCallback instanceof Function)) {
+            TheFragebogen.logger.warn(this.constructor.name + "._sendOnPreloadedCallback()", "called, but no onScreenPreloadedCallback set.");
+            return false;
+        }
+        this.preloaded = true;
+        this.preloadedCallback();
+    }
+
+    /**
+    @abstract
+    @return {string} Returns a string representation of this object.
+    */
+    toString() {
+        TheFragebogen.logger.debug(this.constructor.name + ".toString()", "This method might need to be overridden.");
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LogConsole.html">LogConsole</a></li><li><a href="LogMessage.html">LogMessage</a></li><li><a href="PaginateUI.html">PaginateUI</a></li><li><a href="PaginateUIButton.html">PaginateUIButton</a></li><li><a href="QuestionnaireItem.html">QuestionnaireItem</a></li><li><a href="QuestionnaireItemDate.html">QuestionnaireItemDate</a></li><li><a href="QuestionnaireItemDefined.html">QuestionnaireItemDefined</a></li><li><a href="QuestionnaireItemDefinedMulti.html">QuestionnaireItemDefinedMulti</a></li><li><a href="QuestionnaireItemDefinedOne.html">QuestionnaireItemDefinedOne</a></li><li><a href="QuestionnaireItemDefinedRange.html">QuestionnaireItemDefinedRange</a></li><li><a href="QuestionnaireItemDefinedSelector.html">QuestionnaireItemDefinedSelector</a></li><li><a href="QuestionnaireItemMedia.html">QuestionnaireItemMedia</a></li><li><a href="QuestionnaireItemMediaAudio.html">QuestionnaireItemMediaAudio</a></li><li><a href="QuestionnaireItemMediaAudioRepeatable.html">QuestionnaireItemMediaAudioRepeatable</a></li><li><a href="QuestionnaireItemMediaImage.html">QuestionnaireItemMediaImage</a></li><li><a href="QuestionnaireItemMediaVideo.html">QuestionnaireItemMediaVideo</a></li><li><a href="QuestionnaireItemMediaVideoRepeatable.html">QuestionnaireItemMediaVideoRepeatable</a></li><li><a href="QuestionnaireItemSVG.html">QuestionnaireItemSVG</a></li><li><a href="QuestionnaireItemSVGNASATLX.html">QuestionnaireItemSVGNASATLX</a></li><li><a href="QuestionnaireItemSVGQuality7pt.html">QuestionnaireItemSVGQuality7pt</a></li><li><a href="QuestionnaireItemSVGVisualAnalogueScale.html">QuestionnaireItemSVGVisualAnalogueScale</a></li><li><a href="QuestionnaireItemSystem.html">QuestionnaireItemSystem</a></li><li><a href="QuestionnaireItemSystemConst.html">QuestionnaireItemSystemConst</a></li><li><a href="QuestionnaireItemSystemFocus.html">QuestionnaireItemSystemFocus</a></li><li><a href="QuestionnaireItemSystemScreenDateTime.html">QuestionnaireItemSystemScreenDateTime</a></li><li><a href="QuestionnaireItemSystemScreenDuration.html">QuestionnaireItemSystemScreenDuration</a></li><li><a href="QuestionnaireItemSystemURL.html">QuestionnaireItemSystemURL</a></li><li><a href="QuestionnaireItemSystemViewportSize.html">QuestionnaireItemSystemViewportSize</a></li><li><a href="QuestionnaireItemSystemWait.html">QuestionnaireItemSystemWait</a></li><li><a href="QuestionnaireItemText.html">QuestionnaireItemText</a></li><li><a href="QuestionnaireItemTextArea.html">QuestionnaireItemTextArea</a></li><li><a href="QuestionnaireItemWaitWebsocket.html">QuestionnaireItemWaitWebsocket</a></li><li><a href="QuestionnaireItemWrite.html">QuestionnaireItemWrite</a></li><li><a href="Screen.html">Screen</a></li><li><a href="ScreenController.html">ScreenController</a></li><li><a href="ScreenDataPreview.html">ScreenDataPreview</a></li><li><a href="ScreenIFrame.html">ScreenIFrame</a></li><li><a href="ScreenUIElements.html">ScreenUIElements</a></li><li><a href="ScreenUIElementsAuto.html">ScreenUIElementsAuto</a></li><li><a href="ScreenUIElementsSequential.html">ScreenUIElementsSequential</a></li><li><a href="ScreenWait.html">ScreenWait</a></li><li><a href="ScreenWaitData.html">ScreenWaitData</a></li><li><a href="ScreenWaitDataDownload.html">ScreenWaitDataDownload</a></li><li><a href="ScreenWaitDataUpload.html">ScreenWaitDataUpload</a></li><li><a href="UIElement.html">UIElement</a></li><li><a href="UIElementButton.html">UIElementButton</a></li><li><a href="UIElementHTML.html">UIElementHTML</a></li><li><a href="UIElementInteractive.html">UIElementInteractive</a></li><li><a href="UIElementInteractiveDelayedImageSelectable.html">UIElementInteractiveDelayedImageSelectable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#downloadData">downloadData</a></li><li><a href="global.html#TheFragebogen">TheFragebogen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Nov 17 2023 15:19:08 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
