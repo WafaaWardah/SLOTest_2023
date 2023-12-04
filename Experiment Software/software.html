@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="experiment.css">
         <script src="thefragebogen.js"></script>
         <script src="software_setup.js"></script>
+        <script src="validIDs.js"></script>
 
         <style>
             .questionnaireItem {
@@ -38,7 +39,8 @@
             function verifyID(){
                 testID = document.getElementById("input-id").value;
                 testID = "yglgt#98"
-                if(ids.includes(testID)){
+                console.log(validIDs)
+                if(validIDs.includes(testID)){
                     console.log("ID verified");
                     start();
                 }
