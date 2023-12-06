@@ -8,6 +8,8 @@
         <script src="thefragebogen.js"></script>
         <script src="software_setup.js"></script>
         <script src="validIDs.js"></script>
+        <script src="badge1.js"></script>
+        <script src="badge2.js"></script>
 
         <style>
             .questionnaireItem {
@@ -39,6 +41,8 @@
             function verifyID(){
                 testID = document.getElementById("input-id").value;
                 testID = "yglgt#98"
+                badge = badge1;
+                badgev2 = badge2;
                 console.log(validIDs)
                 if(validIDs.includes(testID)){
                     console.log("ID verified");

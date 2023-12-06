@@ -3,7 +3,7 @@ const fs = require("fs");
 
 let badges = [];
 
-let normalFiles = [];
+var normalFiles = [];
 let goldFiles = [];
 let trickFiles = [];
 
@@ -11,8 +11,7 @@ fs.readdir("./audio_files/ref/normal", (err, files) => {
   if (err) 
     console.log(err); 
   else { 
-    normalFiles = files;
-    console.log(files);
+    //normalFiles = files;
     files.forEach(file => { 
       console.log(typeof(file));
       normalFiles.push(file)
@@ -20,7 +19,7 @@ fs.readdir("./audio_files/ref/normal", (err, files) => {
   } 
 })
 
-console.log(normalFiles);
+
   
 fs.readdir("./audio_files/ref/gold", (err, files) => { 
   if (err) 
@@ -54,6 +53,7 @@ function createElement(name, type, path){
 
 for(let j = 0; j < 10; j++){
     let badge = [];
+    console.log(normalFiles);
     for(let i = 0; i < 20; i++){
         let rnd;
         let file;
