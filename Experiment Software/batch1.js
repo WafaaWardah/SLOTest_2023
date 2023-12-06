@@ -1,5 +1,5 @@
  
-let badge1 = [
+let batch1 = [
     [
       {
         Name: 'for_cnv_m_0054_01.wav',

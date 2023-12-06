@@ -1,8 +1,8 @@
 let screens = [];
 //let ids = ['yglgt#98', 'ardhc#13', 'hqybf#19', 'hzcyx#66', 'xfxrc#26', 'vkgmk#78', 'vsvyg#43', 'xwdty#00', 'hhxnc#67', 'hteec#48', 'xejht#30', 'dwvfi#72', 'txxll#44', 'vqqhs#93', 'kbima#39', 'vlsuy#73', 'gqqkm#61', 'lxbjm#17', 'uvilz#47', 'btzlb#60', 'vvnet#86', 'zrtxb#41', 'horyc#90', 'ylltq#22', 'yxgpf#23', 'kjynj#24', 'veqwf#19', 'hsvqi#07', 'nlcxn#03', 'fcfav#01', 'rsebq#63', 'zynns#70', 'qdbvt#40', 'crjms#49', 'ygxcz#81', 'lgnkm#77', 'wjixh#46', 'frydv#47', 'fjrjn#85', 'wskcu#60', 'hzffm#34', 'xsqbw#29', 'amopd#94', 'vhlxd#53', 'myzgb#94', 'idrny#44', 'befvs#80', 'olwlz#63', 'enura#96', 'fvirw#74', 'fuddu#85', 'abmqd#15', 'tnzdw#86', 'jusrv#31', 'snwkt#85', 'lfium#03', 'vaiua#94', 'gvxna#17', 'qacvs#18', 'uegph#60', 'rysfy#10', 'wrpox#42', 'hlrrt#50', 'uuyvy#10', 'hhefc#12', 'nqbar#05', 'efbjq#90', 'gxhji#56', 'dvtvb#94', 'etpfz#52', 'wxeuk#87', 'wfoez#22', 'zhbrb#73', 'fefdv#93', 'waykj#42', 'xcqqk#07', 'daupq#53', 'nwfle#10', 'uwzov#39', 'nwdug#80', 'cycye#93', 'vvziw#93', 'qppwm#50', 'jqgzi#32', 'brleu#37', 'fythf#82', 'upgem#68', 'tobar#27', 'yuteq#34', 'yvjfr#85', 'uvgum#89', 'rigzq#60', 'wmzms#90', 'qbbgc#37', 'dcwql#13', 'gadyz#17', 'jaxko#55', 'hgsih#82', 'kvdwf#21', 'swbvn#00'];
 let testID;
-let badge;
-let badgev2;
+let batch;
+let batchv2;
 
 function setupScreens(){
     var WelcomeScreen = new ScreenUIElements(
@@ -51,7 +51,7 @@ function setupScreens(){
 
     screens.push(Tutorial);
 
-    let pB = reorderBadgeV2();
+    let pB = reorderBatchV2();
     
     for(let i = 0; i < pB[0].length; i++){
         let text = "";
@@ -61,32 +61,32 @@ function setupScreens(){
         let page = i + 1;
         var AudioSampleScreen = new ScreenUIElements(
             new UIElementHTML(undefined, "<h1>Hörbeispiel " + page.toString() + "</h1>"),
-            new QuestionnaireItemMediaAudioRepeatable(undefined, "<div class='invisible'> FileName: " + pB[0][i].Name + " Type: " + pB[0][i].Type + "</div>", true, pB[0][i].Path + pB[0][i].Name, true, "Replay"),
+            new QuestionnaireItemMediaAudioRepeatable(undefined, "<div class='invisible'> FileName: " + pB[0][i].Name + " Type: " + pB[0][i].Type + "</div>", false, pB[0][i].Path + pB[0][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Overall quality</h2> Bitte bewerten sie die Gesamtqualität", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Coloration</h2> Bitte bewerten sie die Klangfarbe", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Discontinuity</h2> Bitte bewerten sie die Diskontinuität", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Loudness</h2> Bitte bewerten sie die Lautstärke", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Noisiness</h2> Bitte bewerten sie die Noisiness", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             
         );
@@ -109,32 +109,32 @@ function setupScreens(){
         let page = i + 1;
         var AudioSampleScreen = new ScreenUIElements(
             new UIElementHTML(undefined, "<h1>Hörbeispiel " + page.toString() + "</h1>"),
-            new QuestionnaireItemMediaAudioRepeatable(undefined, "<div class='invisible'> FileName: " + pB[1][i].Name + " Type: " + pB[1][i].Type + "</div>", true, pB[1][i].Path + pB[1][i].Name, true, "Replay"),
+            new QuestionnaireItemMediaAudioRepeatable(undefined, "<div class='invisible'> FileName: " + pB[1][i].Name + " Type: " + pB[1][i].Type + "</div>", false, pB[1][i].Path + pB[1][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Overall quality</h2> Bitte bewerten sie die Gesamtqualität", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Coloration</h2> Bitte bewerten sie die Klangfarbe", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Discontinuity</h2> Bitte bewerten sie die Diskontinuität", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Loudness</h2> Bitte bewerten sie die Lautstärke", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Noisiness</h2> Bitte bewerten sie die Noisiness", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             
         );
@@ -157,32 +157,32 @@ function setupScreens(){
         let page = i + 1;
         var AudioSampleScreen = new ScreenUIElements(
             new UIElementHTML(undefined, "<h1>Hörbeispiel " + page.toString() + "</h1>"),
-            new QuestionnaireItemMediaAudioRepeatable(undefined, "<div class='invisible'> FileName: " + pB[2][i].Name + " Type: " + pB[2][i].Type + "</div>", true, pB[2][i].Path + pB[2][i].Name, true, "Replay"),
+            new QuestionnaireItemMediaAudioRepeatable(undefined, "<div class='invisible'> FileName: " + pB[2][i].Name + " Type: " + pB[2][i].Type + "</div>", false, pB[2][i].Path + pB[2][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Overall quality</h2> Bitte bewerten sie die Gesamtqualität", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Coloration</h2> Bitte bewerten sie die Klangfarbe", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Discontinuity</h2> Bitte bewerten sie die Diskontinuität", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Loudness</h2> Bitte bewerten sie die Lautstärke", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
                 "<h2>Noisiness</h2> Bitte bewerten sie die Noisiness", 
-                true, 
+                false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             
         );
@@ -250,19 +250,20 @@ function setupScreens(){
 //     return participantBadge;
 // }
 
-function reorderBadgeV2(){
-    let participantBadge = [];
+function reorderBatchV2(){
+    let participantBatch = [];
 
     let specialQuestions = [];
     let indices = [];
     let normalQuestions = [];
-    for(let i = 0; i < badgev2.length; i++){    
-        if(badgev2[i].Type === "gold" || badgev2[i].Type === "trick"){
-            specialQuestions.push(badgev2[i]);
+
+    for(let i = 0; i < batchv2.length; i++){    
+        if(batchv2[i].Type === "gold" || batchv2[i].Type === "trick"){
+            specialQuestions.push(batchv2[i]);
             indices.push(i);
         }
         else{
-            normalQuestions.push(badgev2[i])
+            normalQuestions.push(batchv2[i])
         }    
     }
 
@@ -271,7 +272,7 @@ function reorderBadgeV2(){
     let countIndex = 0;
     let session = [];
 
-    for(let j = 0; j <= badgev2.length; j++){
+    for(let j = 0; j <= batchv2.length; j++){
         if(j === 0 || j % 20 !== 0){
             if(indices[countIndex] === j){
                 session.push(specialQuestions[countIndex]);
@@ -282,14 +283,14 @@ function reorderBadgeV2(){
             }
         }
         else{
-            participantBadge.push(session);
+            participantBatch.push(session);
             session = [];
             session.push(normalQuestions.shift());
         }
         
     }
 
-    return participantBadge;
+    return participantBatch;
 }
 
 function shuffle(array) {
