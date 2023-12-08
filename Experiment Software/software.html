@@ -5,11 +5,16 @@
         <meta charset="utf-8">
         <title>Experiment software</title>
         <link rel="stylesheet" type="text/css" href="experiment.css">
+        <!-- all js imports which are needed -->
         <script src="thefragebogen.js"></script>
         <script src="software_setup.js"></script>
         <script src="validIDs.js"></script>
-        <script src="batch1.js"></script>
-        <script src="batch2.js"></script>
+
+        <!-- file which includes all of the 5 batches stored in different variables-->
+        <script src="batches.js"></script>
+
+        <!-- file which includes a list of all the Ids, their selected batches and the number of taken sessions -->
+        <script src="IDlist.js"></script>
 
         <style>
             .questionnaireItem {
@@ -38,14 +43,28 @@
         <button type="submit" onclick="verifyID()"> Test starten </button>
 
         <script>
+            //gets called after the sumbit button for the ID input is pressed
             function verifyID(){
+                // get the input value of the text field
                 testID = document.getElementById("input-id").value;
+
+                //for testing purposes we set the ID to a constant value
                 testID = "yglgt#98"
-                batch = batch1;
-                batchv2 = batch2;
-                console.log(validIDs)
+
+                //also just for testing purposes: sets the participant batch (currently only 40 files) to fixed value
+                batch = batch3;
+
+                //now we check if the input ID is included in the valid IDs array
                 if(validIDs.includes(testID)){
                     console.log("ID verified");
+
+                    
+                    // call of the function which builds the participant batch based on the corresponding batches in the IDlist.js -> defined in software_setup.js
+                    // function is called with the list variable itself (from the IDlist.js)
+                    // -> needs to be implemented (and please rename ^^)
+                    functionx(list);
+                    
+                    //call of the start function which builds the complete experiment
                     start();
                 }
                 else{

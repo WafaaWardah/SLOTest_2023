@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 
-let badges = [];
+let batches = [];
 
 var normalFiles = [];
 let goldFiles = [];
@@ -52,7 +52,7 @@ function createElement(name, type, path){
 }
 
 for(let j = 0; j < 10; j++){
-    let badge = [];
+    let batch = [];
     console.log(normalFiles);
     for(let i = 0; i < 20; i++){
         let rnd;
@@ -62,22 +62,22 @@ for(let j = 0; j < 10; j++){
             rnd = Math.floor(Math.random() * goldFiles.length)
             file = goldFiles.splice(rnd, 1);
             element = createElement(file, "gold", "audio_files/ref/gold/")
-            badge.push(element)
+            batch.push(element)
         }
         else if(i === 8 || i === 17){
             rnd = Math.floor(Math.random() * trickFiles.length)
             file = trickFiles.splice(rnd, 1);
             element = createElement(file, "trick", "audio_files/ref/trick/")
-            badge.push(element);
+            batch.push(element);
         }
         else{
             rnd = Math.floor(Math.random() * normalFiles.length)
             file = normalFiles.splice(rnd, 1)
             element = createElement(file, "normal", "audio_files/ref/normal/")
-            badge.push(element)
+            batch.push(element)
         }
     }
-    badges.push(badge)
+    batches.push(batch)
 }
 
 
