@@ -2,29 +2,57 @@ let screens = [];
 let testID;
 let batch;
 
+function getNewRandomBatch(existingBatches) {
+    let allPossibleBatches = ["batch1", "batch2", "batch3", "batch4", "batch5"];
+    let availableBatches = allPossibleBatches.filter(batch => !existingBatches.includes(batch));
+
+    if (availableBatches.length === 0) {
+        throw new Error("No more new batches available"); // Hier maybe eher ne Seite öffnen mit "Du darfst nicht mehr Teilnehmen" 
+    }
+
+    let randomIndex = Math.floor(Math.random() * availableBatches.length);
+    return availableBatches[randomIndex];
+}
 
 // function which builds the participants batch based on the values in the idList
-function functionx(idList){
+function buildBatch(idList){
+
     // if you want to see the list use this line:
     // console.log(idList);
     
     let array = [];
 
     // Things TODO (my approach):
-    //      - iterate over the the idList -> normal way would be with for-loop but there are special js functions such as .find() to search for a specific element in an array
+    //      - iterate over the the idList -> normal way would be with for-loop but there are special js functions such as 
+    //        .find() to search for a specific element in an array
     //
     //      - check if the sessionsTaken Attribute is > 0 -> if and else block 
     //          - in the if/else block:
     //          - check if the id of the current element is the same as testID (global variable defined on top)
-    //          - if that is true -> get the array in the Batches Attribute and combine the two seperate batches in the array variable
+    //          - if that is true -> get the array in the Batches Attribute and combine the two seperate batches in the array 
+    //            variable
     //      - if sessionsTaken > 0 checkwhich batches are assigned and select two new ones randomly
     //      
     //      - useful js functions: 
     //          - .concat() function to combine two arrays
-    //          - .find() with this function you can find a specific element in the List (syntax would be something like: let element = idList.find(x => x.ID === testID))
-    
+    //          - .find() with this function you can find a specific element in the List (syntax would be something like:
+    //            let element = idList.find(x => x.ID === testID))
 
-    //End of function
+    idList.forEach(item => {
+        if (item.SessionsTaken > 0) {
+            if (item.ID === testID) {
+                array = array.concat(item.Batches);
+            } else {
+                // Select two new batches randomly
+                let newBatch1 = getNewRandomBatch(item.Batches);
+                let newBatch2 = getNewRandomBatch(item.Batches.concat(newBatch1)); // Ensures that the second batch of the second set is also different 
+                array = array.concat([newBatch1, newBatch2]);
+                item.Batches.push(newBatch1, newBatch2); // adds the new batches to the json
+                //does SessionsTaken needs to be incremented here?
+            }
+        }
+    });
+
     batch = array;
 }
 
