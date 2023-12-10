@@ -80,7 +80,7 @@ function setupScreens(){
         new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie regelmäßig (z.B. über Ihre Arbeit) mit Hör- und Audiotechnik, -verfahren oder -forschung zu tun?", true, ["Ja", "Nein"]),
         new QuestionnaireItemDefinedOne("questionnaireItem", "Wenn Nein: Hatten Sie früher einmal damit zu tun?", false, ["Ja", "Nein"]),
         new QuestionnaireItemText("questionnaireItem", "Wenn ja: Wann? (Jahr)", false),
-        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie Seh-, Konzentrations- oder Hörschwächen?", true, ["Ja", "Nein"]),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie Konzentrations- oder Hörschwächen?", true, ["Ja", "Nein"]),
         new QuestionnaireItemText("questionnaireItem", "Wenn ja: Welche?", false),
         new QuestionnaireItemDefinedOne("questionnaireItem", "Benutzen Sie Hilfsmittel?", false, ["Ja", "Nein"]),
         new QuestionnaireItemText("questionnaireItem", "Wenn ja: Welche?", false),
