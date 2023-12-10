@@ -1,4 +1,12 @@
+//Note: I had to add a temporary elemnt to each batch to get the batch name,
+//but it is deleted after being used. See the IDlist_algorithm.js file
+
 let batch1 = [
+    {
+    Name: 'batch1',
+    Type: 'temp',
+    Path: 'temp',
+    },
     {
     Name: 'for_cnv_m_0054_01.wav',
     Type: 'normal',
@@ -202,6 +210,11 @@ let batch1 = [
 ]
 
 let batch2 = [
+    {
+    Name: 'batch2',
+    Type: 'temp',
+    Path: 'temp',
+    },
     {
     Name: 'for_cnv_m_0054_01.wav',
     Type: 'normal',
@@ -407,6 +420,11 @@ let batch2 = [
 
 let batch3 = [
     {
+    Name: 'batch3',
+    Type: 'temp',
+    Path: 'temp',
+    },
+    {
     Name: 'for_cnv_m_0054_01.wav',
     Type: 'normal',
     Path: 'audio_files/ref/normal/'
@@ -609,6 +627,11 @@ let batch3 = [
 ]
 
 let batch4 = [
+    {
+    Name: 'batch4',
+    Type: 'temp',
+    Path: 'temp',
+    },
     {
     Name: 'for_cnv_m_0054_01.wav',
     Type: 'normal',
@@ -813,9 +836,9 @@ let batch4 = [
 
 let batch5 = [
     {
-    Name: 'for_cnv_m_0054_01.wav',
-    Type: 'normal',
-    Path: 'audio_files/ref/normal/'
+    Name: 'batch5',
+    Type: 'temp',
+    Path: 'temp',
     },
     {
     Name: 'for_cnv_f_0119_03.wav',
@@ -1013,3 +1036,6 @@ let batch5 = [
     Path: 'audio_files/ref/normal/'
     }
 ]
+
+let batchArray = [batch1, batch2, batch3, batch4, batch5];
+module.exports = batchArray;
