@@ -3,7 +3,7 @@ let testID;
 let batch;
 
 function getNewRandomBatch(existingBatches) {
-    let allPossibleBatches = ["batch1", "batch2", "batch3", "batch4", "batch5"];
+    let allPossibleBatches = [batch1, batch2, batch3, batch4, batch5];
     let availableBatches = allPossibleBatches.filter(batch => !existingBatches.includes(batch));
 
     if (availableBatches.length === 0) {
@@ -39,18 +39,20 @@ function buildBatch(idList){
     //            let element = idList.find(x => x.ID === testID))
 
     idList.forEach(item => {
-        if (item.SessionsTaken > 0) {
-            if (item.ID === testID) {
-                array = array.concat(item.Batches);
-            } else {
+        if (item.ID === testID) {
+            if (item.SessionsTaken < 1) {
+                array = item.Batches[0].concat(item.Batches[1]);
+            }
+            else {
                 // Select two new batches randomly
                 let newBatch1 = getNewRandomBatch(item.Batches);
                 let newBatch2 = getNewRandomBatch(item.Batches.concat(newBatch1)); // Ensures that the second batch of the second set is also different 
                 array = array.concat([newBatch1, newBatch2]);
                 item.Batches.push(newBatch1, newBatch2); // adds the new batches to the json
                 //does SessionsTaken needs to be incremented here?
-            }
+            } 
         }
+        
     });
 
     batch = array;
@@ -243,7 +245,7 @@ function reorderBatchV2(){
     let session = [];
 
     for(let j = 0; j <= batch.length; j++){
-        if(j === 0 || j % 20 !== 0){
+        if(j === 0 || j % 40 !== 0){
             if(indices[countIndex] === j){
                 session.push(specialQuestions[countIndex]);
                 countIndex++;
