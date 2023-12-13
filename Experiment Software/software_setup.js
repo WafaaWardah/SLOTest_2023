@@ -2,8 +2,23 @@ let screens = [];
 let testID;
 let batch;
 
+function getArray(name){
+    switch(name){
+        case 'batch1':
+            return batch1;
+        case 'batch2':
+            return batch2;
+        case 'batch3':
+            return batch3;
+        case 'batch4':
+            return batch4;
+        case 'batch5':
+            return batch5;
+    }
+}
+
 function getNewRandomBatch(existingBatches) {
-    let allPossibleBatches = [batch1, batch2, batch3, batch4, batch5];
+    let allPossibleBatches = ['batch1', 'batch2', 'batch3', 'batch4', 'batch5'];
     let availableBatches = allPossibleBatches.filter(batch => !existingBatches.includes(batch));
 
     if (availableBatches.length === 0) {
@@ -41,14 +56,20 @@ function buildBatch(idList){
     idList.forEach(item => {
         if (item.ID === testID) {
             if (item.SessionsTaken < 1) {
-                array = item.Batches[0].concat(item.Batches[1]);
+                let b1 = getArray(item.BatchIds[0]);
+                let b2 = getArray(item.BatchIds[1]);
+                array = b1.concat(b2);
             }
             else {
                 // Select two new batches randomly
-                let newBatch1 = getNewRandomBatch(item.Batches);
-                let newBatch2 = getNewRandomBatch(item.Batches.concat(newBatch1)); // Ensures that the second batch of the second set is also different 
-                array = array.concat([newBatch1, newBatch2]);
-                item.Batches.push(newBatch1, newBatch2); // adds the new batches to the json
+                let b3_name = getNewRandomBatch(item.BatchIds);
+                let b4_name = getNewRandomBatch(item.BatchIds.concat(b3_name)); // Ensures that the second batch of the second set is also different
+                
+                let b3 = getArray(b3_name);
+                let b4 = getArray(b4_name);
+
+                array = b3.concat(b4);
+                //item.Batches.push(newBatch1, newBatch2); // adds the new batches to the json
                 //does SessionsTaken needs to be incremented here?
             } 
         }
