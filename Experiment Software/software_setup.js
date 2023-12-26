@@ -82,8 +82,13 @@ function buildBatch(idList){
 function setupScreens(){
     var WelcomeScreen = new ScreenUIElements(
         new UIElementHTML(undefined, "<h1>Willkommen zum Experiment</h1>"),
-        new UIElementHTML(undefined, "some introduction text..."),
-    );
+        new UIElementHTML(undefined, "Hi Testperson. Danke, dass du freiwillig an diesem Test teilnimmst!"),
+        new UIElementHTML(undefined, "Das einzige, was du für die Teilnahme an diesem Test brauchst, ist ein gutes Gehör und super Deutschkenntnisse."),
+        new UIElementHTML(undefined, "Deine Antworten sind komplett anonym und subjektiv. Also es gibt kein richtig oder falsch bei der Wahl deiner Antworten."),
+        new UIElementHTML(undefined, "Auf der nächsten Seite werden ein paar allgemeine Fragen zu deiner Person und deinem Telekommunikationsverhalten gestellt. Danach kommt eine Erklärung des Hörtests und dann geht es auch schon richtig los."),
+        new UIElementHTML(undefined, "Diese Befragung dauert insgesamt ca. eine Stunde (mit kurzen Pausen zwischendurch) und wird mit 10 Euro pro Stunde belohnt (außer du bist ein Mitarbeiter bzw. eine Mitarbeiterin der TU, dann kein Geld für dich xd)."),
+        new UIElementHTML(undefined, "Falls du Fragen während des Tests aufkommen sollten, kannst du dich jederzeit an einen Betreuer bzw. einer Betreuerin im Raum wenden.")
+        );
 
     screens.push(WelcomeScreen);
 
@@ -104,7 +109,7 @@ function setupScreens(){
         new QuestionnaireItemDefinedOne("questionnaireItem", "Wenn Nein: Hatten Sie früher einmal damit zu tun?", false, ["Ja", "Nein"]),
         new QuestionnaireItemText("questionnaireItem", "Wenn ja: Wann? (Jahr)", false),
         new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie Konzentrationsschwächen?", true, ["Ja", "Ein bisschen", "Nein"]),
-        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie Hörschwächen (z.B. taub, chronischer Tinnitus)?", true, ["Ja", "Nein"]),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie Hörschwächen (z.B. Taubheit, chronischer Tinnitus)?", true, ["Ja", "Nein"]),
         new QuestionnaireItemText("questionnaireItem", "Wenn ja: Welche?", false),
         new QuestionnaireItemDefinedOne("questionnaireItem", "Benutzen Sie Hilfsmittel?", false, ["Ja", "Nein"]),
         new QuestionnaireItemText("questionnaireItem", "Wenn ja: Welche?", false),
@@ -114,15 +119,16 @@ function setupScreens(){
     
     var Tutorial = new ScreenUIElements(
         new UIElementHTML(undefined, "<h1>Einführung</h1>"),
-        new UIElementHTML(undefined, "Some general information..."),
-        new UIElementHTML(undefined, "5 rating Categories:"),
-        new UIElementHTML("questionnaireItem", "<h2>Overall quality</h2> Definition of the Category..."),
-        new UIElementHTML("questionnaireItem", "<h2>Coloration</h2> Definition of the Category..."),
-        new UIElementHTML("questionnaireItem", "<h2>Discontinuity</h2> Definition of the Category..."),
-        new UIElementHTML("questionnaireItem", "<h2>Loudness</h2> Definition of the Category..."),
-        new UIElementHTML("questionnaireItem", "<h2>Noisiness</h2> Definition of the Category..."),
-        new UIElementHTML(undefined, "Some important information... (e.g. Audio can be repeated multiple times, Audio plays directly, Break of x-minutes after 20 Questions...)"),
-        new UIElementHTML(undefined, "Afterwards: Some example questions (How many?) -> Not added yet"),
+        new UIElementHTML(undefined, "Hi Testperson. Immer noch vielen Dank, dass du freiwillig an diesem Test teilnimmst!"),
+        new UIElementHTML(undefined, "Auf den nächsten Seiten werden dir Audiodateien abgespielt, die du auf einer Skala bewerten musst."),
+        new UIElementHTML(undefined, "Dies sind die 5 Bewertungskategorien:"),
+        new UIElementHTML("questionnaireItem", "<h2>Gesamtqualität</h2> Wie würdest du die allgemeine Qualität dieser Audio bewerten? Eher gut oder schlecht?"),
+        new UIElementHTML("questionnaireItem", "<h2>Klangfarbe</h2> Definition of the Category..."),
+        new UIElementHTML("questionnaireItem", "<h2>Diskontinuität</h2> Definition of the Category..."),
+        new UIElementHTML("questionnaireItem", "<h2>Lautstärke</h2> Definition of the Category..."),
+        new UIElementHTML("questionnaireItem", "<h2>Rauschen</h2> Definition of the Category..."),
+        new UIElementHTML(undefined, "Einige Hinweise: Die Audiodatei kann mehrmals wiederholt angehört werden. Außerdem ist zu beachten, dass wenn man auf die nächste Seite kommt, dass die Audio sofort automatisch abgespielt wird. Des Weiteren gibt es eine kurze Pause nach jeweils 20 Fragen."),
+        new UIElementHTML(undefined, "Falls du Fragen während des Tests aufkommen sollten, kannst du dich jederzeit an einen Betreuer bzw. einer Betreuerin im Raum wenden."),
     );
 
     screens.push(Tutorial);
@@ -141,27 +147,27 @@ function setupScreens(){
             new UIElementHTML(undefined, text),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Overall quality</h2> Bitte bewerten sie die Gesamtqualität", 
+                "<h2>Gesamtqualität</h2> Bitte bewerten sie die Gesamtqualität", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Coloration</h2> Bitte bewerten sie die Klangfarbe", 
+                "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Discontinuity</h2> Bitte bewerten sie die Diskontinuität", 
+                "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Loudness</h2> Bitte bewerten sie die Lautstärke", 
+                "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Noisiness</h2> Bitte bewerten sie die Noisiness", 
+                "<h2>Rauschen</h2> Bitte bewerten sie das Rauschen", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             
@@ -189,27 +195,27 @@ function setupScreens(){
             new UIElementHTML(undefined, text),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Overall quality</h2> Bitte bewerten sie die Gesamtqualität", 
+                "<h2>Gesamtqualität</h2> Bitte bewerten sie die Gesamtqualität", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Coloration</h2> Bitte bewerten sie die Klangfarbe", 
+                "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Discontinuity</h2> Bitte bewerten sie die Diskontinuität", 
+                "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Loudness</h2> Bitte bewerten sie die Lautstärke", 
+                "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             new QuestionnaireItemDefinedOne(
                 "questionnaireItem", 
-                "<h2>Noisiness</h2> Bitte bewerten sie die Noisiness", 
+                "<h2>Rauschen</h2> Bitte bewerten sie die Rauschen", 
                 false, 
                 ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
             
