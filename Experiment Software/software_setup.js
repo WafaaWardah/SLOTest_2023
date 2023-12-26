@@ -146,10 +146,10 @@ function setupScreens(){
             new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<div class='invisible'> FileName: " + pB[0][i].Name + " Type: " + pB[0][i].Type + "</div>", false, pB[0][i].Path + pB[0][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
             new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Gesamtqualität</h2> Bitte bewerten sie die Gesamtqualität", false, "Sehr schlecht", "Sehr gut"),
-            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe", false, "klanglisch verfärbt", "klanglisch unverfärbt"),
-            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität", false, "dikontinuierlich", "kontinuierlich"),
-            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke", false, "nicht optimal", "optimal"),
-            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Rauschen</h2> Bitte bewerten sie das Rauschen", false, "rauschhaftig", "unrauschhaftig"),  
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe (Klingt die Stimme verzerrt oder menschlich normal?)", false, "klanglisch verfärbt", "klanglisch unverfärbt"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität (Ist der Ton abgehackt oder spielt es flüssig ab?)", false, "dikontinuierlich", "kontinuierlich"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke (Findest du die Audio zu laut oder leise oder ist es genau optimal?)", false, "nicht optimal", "optimal"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Rauschen</h2> Bitte bewerten sie das Rauschen (Hörst Störgeräusche in dieser Audiodatei und wie stark?)", false, "rauschhaftig", "unrauschhaftig"),  
         );
 
         screens.push(AudioSampleScreen);
@@ -173,10 +173,10 @@ function setupScreens(){
             new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<div class='invisible'> FileName: " + pB[1][i].Name + " Type: " + pB[1][i].Type + "</div>", false, pB[1][i].Path + pB[1][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
             new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Gesamtqualität</h2> Bitte bewerten sie die Gesamtqualität", false, "Sehr schlecht", "Sehr gut"),
-            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe", false, "klanglisch verfärbt", "klanglisch unverfärbt"),
-            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität", false, "dikontinuierlich", "kontinuierlich"),
-            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke", false, "nicht optimal", "optimal"),
-            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Rauschen</h2> Bitte bewerten sie das Rauschen", false, "rauschhaftig", "unrauschhaftig"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe (Klingt die Stimme verzerrt oder menschlich normal?)", false, "klanglisch verfärbt", "klanglisch unverfärbt"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität (Ist der Ton abgehackt oder spielt es flüssig ab?)", false, "dikontinuierlich", "kontinuierlich"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke (Findest du die Audio zu laut oder leise oder ist es genau optimal?)", false, "nicht optimal", "optimal"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Rauschen</h2> Bitte bewerten sie das Rauschen (Hörst Störgeräusche in dieser Audiodatei und wie stark?)", false, "rauschhaftig", "unrauschhaftig"),  
         );
 
         screens.push(AudioSampleScreen);
