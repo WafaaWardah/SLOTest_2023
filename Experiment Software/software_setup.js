@@ -111,7 +111,7 @@ function setupScreens(){
         new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie Konzentrationsschwächen?", true, ["Ja", "Ein bisschen", "Nein"]),
         new QuestionnaireItemDefinedOne("questionnaireItem", "<b>Haben Sie Hörschwächen (z.B. Taubheit, chronischer Tinnitus)?", true, ["Ja", "Nein"]),
         new QuestionnaireItemText("questionnaireItem", "Wenn ja: Welche?", false),
-        new QuestionnaireItemDefinedOne("questionnaireItem", "Benutzen Sie Hilfsmittel?", false, ["Ja", "Nein"]),
+        new QuestionnaireItemDefinedOne("questionnaireItem", "Benutzen Sie Hilfsmittel? (z.B. ein Hörgerät)", false, ["Ja", "Nein"]),
         new QuestionnaireItemText("questionnaireItem", "Wenn ja: Welche?", false),
     );
 
