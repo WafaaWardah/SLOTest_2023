@@ -125,9 +125,9 @@ function setupScreens(){
         new UIElementHTML("questionnaireItem", "<h2>Gesamtqualität</h2> Wie würdest du die allgemeine Qualität dieser Audio bewerten? Eher gut oder schlecht?"),
         new UIElementHTML("questionnaireItem", "<h2>Klangfarbe</h2> Klingt die Stimme verzerrt oder menschlich normal?"),
         new UIElementHTML("questionnaireItem", "<h2>Diskontinuität</h2> Ist der Ton abgehackt oder spielt es flüssig ab?"),
-        new UIElementHTML("questionnaireItem", "<h2>Lautstärke</h2> Wie laut oder leise findest du diese Audio?"),
+        new UIElementHTML("questionnaireItem", "<h2>Lautstärke</h2> Findest du die Audio zu laut oder leise oder ist es genau optimal?"),
         new UIElementHTML("questionnaireItem", "<h2>Rauschen</h2> Hörst du Rauschen oder andere Störgeräusche in dieser Audiodatei und wie stark?"),
-        new UIElementHTML(undefined, "Einige Hinweise: Die Audiodatei kann mehrmals wiederholt angehört werden. Außerdem ist zu beachten, dass wenn man auf die nächste Seite kommt, dass die Audio sofort automatisch abgespielt wird. Des Weiteren gibt es eine kurze Pause nach jeweils 20 Fragen."),
+        new UIElementHTML(undefined, "Einige Hinweise: Die Audiodatei kann mehrmals wiederholt angehört werden. Außerdem ist zu beachten, dass wenn man auf die nächste Seite kommt, dass die Audio sofort automatisch abgespielt wird. Des Weiteren gibt es eine kurze Pause nach ca. 40 Fragen."),
         new UIElementHTML(undefined, "Falls du Fragen während des Tests aufkommen sollten, kannst du dich jederzeit an einen Betreuer bzw. einer Betreuerin im Raum wenden."),
     );
 
@@ -145,32 +145,11 @@ function setupScreens(){
             new UIElementHTML(undefined, "<h1>Hörbeispiel " + page.toString() + "</h1>"),
             new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<div class='invisible'> FileName: " + pB[0][i].Name + " Type: " + pB[0][i].Type + "</div>", false, pB[0][i].Path + pB[0][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Gesamtqualität</h2> Bitte bewerten sie die Gesamtqualität", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Rauschen</h2> Bitte bewerten sie das Rauschen", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Gesamtqualität</h2> Bitte bewerten sie die Gesamtqualität", false, "Sehr schlecht", "Sehr gut"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe", false, "klanglisch verfärbt", "klanglisch unverfärbt"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität", false, "dikontinuierlich", "kontinuierlich"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke", false, "nicht optimal", "optimal"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Rauschen</h2> Bitte bewerten sie das Rauschen", false, "rauschhaftig", "unrauschhaftig"),  
         );
 
         screens.push(AudioSampleScreen);
@@ -178,7 +157,7 @@ function setupScreens(){
     
     var BreakScreen1 = new ScreenUIElements(
         new UIElementHTML(undefined, "<h1> Pause </h1>"),
-        new UIElementHTML(undefined, "Some text..."),
+        new UIElementHTML(undefined, "Du kannst kurz 10 Minuten Pause machen und dann weiter machen."),
     );
 
     screens.push(BreakScreen1);
@@ -193,32 +172,11 @@ function setupScreens(){
             new UIElementHTML(undefined, "<h1>Hörbeispiel " + page.toString() + "</h1>"),
             new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<div class='invisible'> FileName: " + pB[1][i].Name + " Type: " + pB[1][i].Type + "</div>", false, pB[1][i].Path + pB[1][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Gesamtqualität</h2> Bitte bewerten sie die Gesamtqualität", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            new QuestionnaireItemDefinedOne(
-                "questionnaireItem", 
-                "<h2>Rauschen</h2> Bitte bewerten sie die Rauschen", 
-                false, 
-                ["Sehr schlecht", "Schlecht", "Ok", "Gut", "Sehr gut"]),
-            
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Gesamtqualität</h2> Bitte bewerten sie die Gesamtqualität", false, "Sehr schlecht", "Sehr gut"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Klangfarbe</h2> Bitte bewerten sie die Klangfarbe", false, "klanglisch verfärbt", "klanglisch unverfärbt"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Diskontinuität</h2> Bitte bewerten sie die Diskontinuität", false, "dikontinuierlich", "kontinuierlich"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Lautstärke</h2> Bitte bewerten sie die Lautstärke", false, "nicht optimal", "optimal"),
+            new QuestionnaireItemSVGNASATLX("questionnaireItem", "<h2>Rauschen</h2> Bitte bewerten sie das Rauschen", false, "rauschhaftig", "unrauschhaftig"),
         );
 
         screens.push(AudioSampleScreen);
