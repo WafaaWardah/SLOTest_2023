@@ -17,12 +17,13 @@
         <script src="IDlist.js"></script>
 
         <style>
-            .questionnaireItem {
-                width: 50em;
+            .questionnaireItem, .qI-multi, .qI-single, .qI-age, .qI-year, .qI-date, .qI-time, .qI-text, .qI-select-language {
+                width: 75em;
                 margin-left: auto;
                 margin-right: auto;
     
                 border-style: inset;
+                border-radius: 10px;
                 background-color: Snow;
                 padding: 0.5em;
             }
@@ -37,10 +38,19 @@
     </head>
 
     <body>
+        <header>
+            <div id="head">
+                <div id="wrapper"> 
+                    <div id="header-text"> <b>Advanced Projects at the Quality & Usability Lab </b></div>
+                    <img src="header/TU-Berlin-Logo.png"> 
+                </div>   
+            </div>
+        </header>
+        
         <div class = "input-container">
             <input type="text" class="input-field" id="input-id" placeholder="Bitte ID eingeben">
         </div>
-        <button type="submit" onclick="verifyID()"> Test starten </button>
+        <button type="submit" class="start-button" onclick="verifyID()"> Test starten </button>
 
         <script>
             //gets called after the sumbit button for the ID input is pressed
@@ -58,12 +68,7 @@
                 if(validIDs.includes(testID)){
                     console.log("ID verified");
 
-                    
-                    // call of the function which builds the participant batch based on the corresponding batches in the IDlist.js -> defined in software_setup.js
-                    // function is called with the list variable itself (from the IDlist.js)
-                    // -> needs to be implemented (and please rename ^^)
                     buildBatch(idList);
-                    
                     //call of the start function which builds the complete experiment
                     start();
                 }

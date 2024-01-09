@@ -1,6 +1,7 @@
 body {
-    margin: 5em 0 5% 0;
+    margin: 0 0 0 0;
     text-align: center;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     /* Tip: Disable user selection everywhere. */
     user-select: none;
 }
@@ -20,3 +21,130 @@ body>div>div {
     margin-left: auto;
     margin-right: auto
 }
+
+/* make filename and type invisible for participant */
+.invisible {
+  color: snow;
+}
+
+
+/* configurations for the header */
+#head {
+  width: 100%;
+  height: 100px;
+  background-color: lightgray;
+  margin-bottom: 5em;
+  border: 0;
+}
+
+#wrapper {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 3px 10px gray;
+}
+
+#header-text {
+  margin-left: 20px;
+  font-size: 25px;
+  color: #FFFFFF;
+  text-shadow: 0px 2px 5px gray;
+}
+
+#wrapper>img {
+  max-height: 75px;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+
+/* configurations for the input field on the first page */
+.input-field {
+    margin-bottom: 2em;
+    width: 25%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+
+/* design of buttons */
+.start-button, .button>input {
+  background-color: #111827;
+  border: 1px solid transparent;
+  border-radius: .75rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  padding: .75rem 1.2rem;
+  text-align: center;
+  text-decoration: none #6B7280 solid;
+  text-decoration-thickness: auto;
+  transition-duration: .2s;
+  transition-property: background-color,border-color,color,fill,stroke;
+  transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+}
+
+.start-button:hover, .button>input:hover {
+  background-color: #374151;
+}
+
+.start-button:focus, .button>input:focus {
+  box-shadow: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .start-button, .button>input {
+    padding: .75rem 1.5rem;
+  }
+}
+
+/* confiugrations for the design of the Item boxes */
+.qI-single>table>tbody>tr>td {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.qI-single>div, .qI-multi>div, .questionnaireItem>div, .qI-age>div, .qI-year>div, .qI-year>div .qI-date>div, .qI-time>div, .qI-text>div, .qI-select-language>div {
+  margin-bottom: 10px;
+}
+
+.qI-multi>div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  align-items: flex-start;
+}
+
+input[type="number"] {
+  width: 177px;
+}
+
+/* Validation */
+/* .qI-age>div>input:invalid {
+  border-color: red;
+}
+
+.qI-age>div>input:valid{
+  border-color: green;
+} */

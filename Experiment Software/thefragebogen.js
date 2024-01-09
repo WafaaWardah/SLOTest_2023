@@ -2479,7 +2479,54 @@ class QuestionnaireItemText extends QuestionnaireItem {
     _createAnswerNode() {
         const answerNode = document.createElement("div");
 
-        this.input = document.createElement("input");
+        switch(this.className){
+            case "qI-date":
+                this.input = document.createElement("input");
+                this.input.type = "date";
+                this.input.name = "birthdate";
+                this.input.min = "1900-01-01";
+                this.input.max = "2010-01-01";
+                break;
+            case "qI-age":
+                this.input = document.createElement("input");
+                this.input.type = "number";
+                this.input.name = "age";
+                this.input.min = "15";
+                this.input.max = "100";
+                this.input.placeholder = "z.B. 25";
+                break;
+            case "qI-year":
+                this.input = document.createElement("input");
+                this.input.type = "number";
+                this.input.name = "age";
+                this.input.min = "1910";
+                this.input.max = "2024";
+                this.input.placeholder = "z.B. 2024";
+                break;
+            case "qI-time":
+                this.input = document.createElement("input");
+                this.input.type = "time";
+                this.input.name = "clock";
+                this.input.placeholder = "00:00"
+                this.input.min = "00:00";
+                this.input.max = "23:59";
+                break;
+            case "qI-text":
+                this.input = document.createElement("input");
+                this.input.type = "text";
+                break;
+            case "qI-select-language":
+                this.input = document.createElement("select");
+                const languages = ["keine Angabe","Albanisch","Arabisch","Armenisch","Aseri (Aserbaidschanisch)","Bosnisch","Bulgarisch","Chinesisch","Dänisch","Dari (Neupersisch)","Englisch","Estnisch","Finnisch","Flämisch","Französisch","Georgisch","Gilbertesisch","Griechisch","Hebräisch (Iwrith)","Hindi","Irisch","Isländisch","Italienisch","Japanisch","Kasachisch","Katalanisch","Khmer","Kirgiesisch","Koreanisch","Kroatisch","Kurdisch","Laotisch","Latain","Lettisch","Litauisch","Makedonisch","Maltesisch","Moldauisch","Mongolisch","Neugriechisch","Niederländisch","Norwegisch","Persisch","Polnisch","Portugiesisch","Rumänisch","Russisch","Schwedisch","Serbisch","Singhalesisch","Slowakisch","Slowenisch","Spanisch","Tadschiekisch","Thailändisch","Tschechisch","Türkisch","Turkmenisch","Ukrainisch","Ungarisch","Urdu","Usbekisch","Vietnamesisch"]
+                for(let i = 0; i < 63; i++){
+                    const opt = document.createElement("option");
+                    opt.innerHTML = languages[i];
+                    this.input.appendChild(opt);
+                }
+                break;
+        }
+        
+        
         this.input.addEventListener("change", (event) => this.setAnswer(this.input.value === "" ? null : this.input.value));
 
         answerNode.appendChild(this.input);
@@ -3111,6 +3158,7 @@ class QuestionnaireItemDefinedMulti extends QuestionnaireItemDefined {
         const answerNode = document.createElement("div");
 
         for (let i = 0; i < this.optionList.length; i++) {
+            const newDiv = document.createElement("div");
             this.input[i] = document.createElement("input");
             this.input[i].type = "checkbox";
             this.input[i].id = this.identifier + i;
@@ -3123,8 +3171,12 @@ class QuestionnaireItemDefinedMulti extends QuestionnaireItemDefined {
             label.setAttribute("for", this.identifier + i);
             label.innerHTML = this.optionList[i];
 
-            answerNode.appendChild(this.input[i]);
-            answerNode.appendChild(label);
+            newDiv.appendChild(this.input[i]);
+            newDiv.appendChild(label);
+
+            answerNode.appendChild(newDiv);
+            // answerNode.appendChild(this.input[i]);
+            // answerNode.appendChild(label);
         }
 
         return answerNode;
