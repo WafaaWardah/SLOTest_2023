@@ -17,7 +17,7 @@
         <script src="IDlist.js"></script>
 
         <style>
-            .questionnaireItem, .qI-multi, .qI-single, .qI-age, .qI-year, .qI-date, .qI-time, .qI-text, .qI-select-language {
+            .questionnaireItem, .qI-multi, .qI-single, .qI-age, .qI-year, .qI-date, .qI-time, .qI-text, .qI-hour, .qI-select-language {
                 width: 75em;
                 margin-left: auto;
                 margin-right: auto;
@@ -50,7 +50,7 @@
         <div class = "input-container">
             <input type="text" class="input-field" id="input-id" placeholder="Bitte ID eingeben">
         </div>
-        <button type="submit" class="start-button" onclick="verifyID()"> Test starten </button>
+        <button type="submit" class="start-button" onclick="verifyID()"> Vorbefragung starten </button>
 
         <script>
             //gets called after the sumbit button for the ID input is pressed
@@ -60,6 +60,8 @@
 
                 //for testing purposes we set the ID to a constant value
                 testID = "yglgt#98"
+
+                dateTime = new Date().toLocaleString();
 
                 //also just for testing purposes: sets the participant batch (currently only 40 files) to fixed value
                 batch = batch3;

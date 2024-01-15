@@ -124,7 +124,7 @@ body>div>div {
   padding-right: 15px;
 }
 
-.qI-single>div, .qI-multi>div, .questionnaireItem>div, .qI-age>div, .qI-year>div, .qI-year>div .qI-date>div, .qI-time>div, .qI-text>div, .qI-select-language>div {
+.qI-single>div, .qI-multi>div, .questionnaireItem>div, .qI-age>div, .qI-year>div, .qI-year>div .qI-date>div, .qI-time>div, .qI-text>div, .qI-hour>div, .qI-select-language>div {
   margin-bottom: 10px;
 }
 
@@ -138,6 +138,23 @@ body>div>div {
 
 input[type="number"] {
   width: 177px;
+}
+
+.tutorial {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  align-items: flex-start;
+}
+
+.tutorial>ul>li{
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.questionnaireItem>div>p{
+  text-align: left;
 }
 
 /* Validation */

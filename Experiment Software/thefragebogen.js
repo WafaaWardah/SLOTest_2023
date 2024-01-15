@@ -2495,6 +2495,14 @@ class QuestionnaireItemText extends QuestionnaireItem {
                 this.input.max = "100";
                 this.input.placeholder = "z.B. 25";
                 break;
+            case "qI-hour":
+                this.input = document.createElement("input");
+                this.input.type = "number";
+                this.input.name = "hour";
+                this.input.min = "0";
+                this.input.max = "168";
+                this.input.placeholder = "0";
+                break;
             case "qI-year":
                 this.input = document.createElement("input");
                 this.input.type = "number";

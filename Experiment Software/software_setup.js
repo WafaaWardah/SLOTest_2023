@@ -1,6 +1,7 @@
 let screens = [];
 let testID;
 let batch;
+let dateTime;
 
 // select the correct array based on the string input
 function getArray(name){
@@ -59,18 +60,18 @@ function buildBatch(idList){
 }
 
 function setupScreens(){
-    var WelcomeScreen = new ScreenUIElements(
-        new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
-        new UIElementHTML(undefined, "<h1>Willkommen zum Experiment</h1>"),
-        new UIElementHTML(undefined, "Hallo Testperson. Danke, dass Sie freiwillig an diesem Test teilnehmen! <br> Das einzige, was Sie für die Teilnahme an diesem Test benötigen, ist ein gutes Gehör und ausgezeichnete Deutschkenntnisse. <br> Ihre Antworten sind komplett anonym und subjektiv. Also gibt es kein richtig oder falsch bei der Wahl Ihrer Antworten. <br> Auf der nächsten Seite werden ein paar allgemeine Fragen zu Ihrer Person und Ihrem Telekommunikationsverhalten gestellt. Danach kommt eine Erklärung des Hörtests und dann geht es auch schon richtig los. <br> Diese Befragung dauert insgesamt ca. eine Stunde (mit kurzen Pausen zwischendurch) und wird mit 10 Euro pro Stunde belohnt (außer Sie sind ein Mitarbeiter bzw. eine Mitarbeiterin der TU, dann kein Geld für Sie xd). <br> Falls Fragen während des Tests aufkommen sollten, können Sie sich jederzeit an einen Betreuer bzw. einer Betreuerin im Raum wenden."),
-        // new UIElementHTML(undefined, "Das einzige, was Sie für die Teilnahme an diesem Test benötigen, ist ein gutes Gehör und ausgezeichnete Deutschkenntnisse."),
-        // new UIElementHTML(undefined, "Ihre Antworten sind komplett anonym und subjektiv. Also gibt es kein richtig oder falsch bei der Wahl Ihrer Antworten."),
-        // new UIElementHTML(undefined, "Auf der nächsten Seite werden ein paar allgemeine Fragen zu Ihrer Person und Ihrem Telekommunikationsverhalten gestellt. Danach kommt eine Erklärung des Hörtests und dann geht es auch schon richtig los."),
-        // new UIElementHTML(undefined, "Diese Befragung dauert insgesamt ca. eine Stunde (mit kurzen Pausen zwischendurch) und wird mit 10 Euro pro Stunde belohnt (außer Sie sind ein Mitarbeiter bzw. eine Mitarbeiterin der TU, dann kein Geld für Sie xd)."),
-        // new UIElementHTML(undefined, "Falls Fragen während des Tests aufkommen sollten, können Sie sich jederzeit an einen Betreuer bzw. einer Betreuerin im Raum wenden.")
-        );
+    // var WelcomeScreen = new ScreenUIElements(
+    //     new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
+    //     new UIElementHTML(undefined, "<h1>Willkommen zum Experiment</h1>"),
+    //     new UIElementHTML(undefined, "Hallo Testperson. Danke, dass Sie freiwillig an diesem Test teilnehmen! <br> Das einzige, was Sie für die Teilnahme an diesem Test benötigen, ist ein gutes Gehör und ausgezeichnete Deutschkenntnisse. <br> Ihre Antworten sind komplett anonym und subjektiv. Also gibt es kein richtig oder falsch bei der Wahl Ihrer Antworten. <br> Auf der nächsten Seite werden ein paar allgemeine Fragen zu Ihrer Person und Ihrem Telekommunikationsverhalten gestellt. Danach kommt eine Erklärung des Hörtests und dann geht es auch schon richtig los. <br> Diese Befragung dauert insgesamt ca. eine Stunde (mit kurzen Pausen zwischendurch) und wird mit 10 Euro pro Stunde belohnt (außer Sie sind ein Mitarbeiter bzw. eine Mitarbeiterin der TU, dann kein Geld für Sie xd). <br> Falls Fragen während des Tests aufkommen sollten, können Sie sich jederzeit an einen Betreuer bzw. einer Betreuerin im Raum wenden."),
+    //     // new UIElementHTML(undefined, "Das einzige, was Sie für die Teilnahme an diesem Test benötigen, ist ein gutes Gehör und ausgezeichnete Deutschkenntnisse."),
+    //     // new UIElementHTML(undefined, "Ihre Antworten sind komplett anonym und subjektiv. Also gibt es kein richtig oder falsch bei der Wahl Ihrer Antworten."),
+    //     // new UIElementHTML(undefined, "Auf der nächsten Seite werden ein paar allgemeine Fragen zu Ihrer Person und Ihrem Telekommunikationsverhalten gestellt. Danach kommt eine Erklärung des Hörtests und dann geht es auch schon richtig los."),
+    //     // new UIElementHTML(undefined, "Diese Befragung dauert insgesamt ca. eine Stunde (mit kurzen Pausen zwischendurch) und wird mit 10 Euro pro Stunde belohnt (außer Sie sind ein Mitarbeiter bzw. eine Mitarbeiterin der TU, dann kein Geld für Sie xd)."),
+    //     // new UIElementHTML(undefined, "Falls Fragen während des Tests aufkommen sollten, können Sie sich jederzeit an einen Betreuer bzw. einer Betreuerin im Raum wenden.")
+    //     );
 
-    screens.push(WelcomeScreen);
+    // screens.push(WelcomeScreen);
 
     var PreTestQuestionaire = new ScreenUIElements(
         new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
@@ -78,21 +79,27 @@ function setupScreens(){
         new UIElementHTML(undefined, "Bitte beantworten Sie die folgenden Fragen"),
         new QuestionnaireItemText("qI-age", "<b>Wie alt sind Sie?", true),
         new QuestionnaireItemDefinedOne("qI-single", "<b>Wie würden Sie Ihre Deutschkenntnisse einschätzen?", true,["Muttersprache", "C1/2 (Verhandlungssicher)", "B1/2 (Gesprächssicher)", "keine der genannten"]),
-        new QuestionnaireItemText("qI-select-language", "Wenn deutsch nicht Ihre Muttersprache ist: Was ist Ihre Muttersprache?", false),
-        new QuestionnaireItemDefinedMulti("qI-multi", "<b>Welche der folgenden Kommunikationsformen nutzen Sie regelmäßig (mehrmals im Monat)?", true,["Telefonie über Netz", "Telefonie über Internet", "Videotelefonie", "Videokonferenzen (Zoom etc.)", "keine der genannten"]),
-        new QuestionnaireItemText("qI-age", "Wieviele Stunden pro Woche nutzen Sie diese Kommunikationsmittel geschäftlich?", false),
-        new QuestionnaireItemText("qI-age", "Wieviele Stunden pro Woche nutzen Sie diese Kommunikationsmittel privat?", false),
-        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<b>Wie sind Ihre bisherigen Erfahrungen mit Telefonie?", true, ["", "sehr schlecht", "", "", "", "sehr gut", ""]),
-        new QuestionnaireItemDefinedMulti("qI-multi", "<b>Welche Medien nutzen Sie regelmäßig (mehrmals im Monat)?", true,["Social Media", "Zeitung", "Fernsehen", "Radio", "keine der genannten"]),
+        new QuestionnaireItemText("qI-text", "Wenn deutsch nicht Ihre Muttersprache ist: Was ist Ihre Muttersprache?", false),
+        new QuestionnaireItemDefinedMulti("qI-multi", "<b>Welche der folgenden Telekommunikationsformen nutzen Sie regelmäßig?", true,["Telefonie über Festnetz", "Mobiltelefonie", "Internettelefonie (z.B. über Messenger-Apps wie Whatsapp)", "Videotelefonie"]),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Telefonie über Festnetz?", true),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Mobiltelefonie?", true),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Internettelefonie?", true),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Videotelefonie?", true),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<b>Wie sind Ihre bisherigen Erfahrungen mit Telekommunikationsmitteln?", true, ["", "sehr schlecht", "", "", "", "sehr gut", ""]),
+        new QuestionnaireItemDefinedMulti("qI-multi", "<b>Welche dieser Medien nutzen Sie regelmäßig?", true,["Social Media", "Online-Zeitungen", "Fernsehen", "Radio"]),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Social Media?", true),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Online-Zeitungen?", true),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie den Fernseher?", true),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie das Radio?", true),
         new QuestionnaireItemDefinedOne("qI-single", "<b>Haben Sie schon einmal an einem Hörtest/-experiment teilgenommen?", true,["Ja", "Nein"]),
-        new QuestionnaireItemText("qI-year", "Wenn ja: Wann? (Jahr)", false),
-        new QuestionnaireItemDefinedOne("qI-single", "<b>Haben Sie regelmäßig (z.B. über Ihre Arbeit) mit Hör- und Audiotechnik, -verfahren oder -forschung zu tun?", true, ["Ja", "Nein"]),
+        new QuestionnaireItemText("qI-year", "Wenn Ja: Wann? (Jahr)", false),
+        new QuestionnaireItemDefinedOne("qI-single", "<b>Haben Sie regelmäßig (z.B. über Ihre Arbeit) mit Audiotechnikverfahren/-forschung zu tun?", true, ["Ja", "Nein"]),
         new QuestionnaireItemDefinedOne("qI-single", "Wenn Nein: Hatten Sie früher einmal damit zu tun?", false, ["Ja", "Nein"]),
-        new QuestionnaireItemText("qI-year", "Wenn ja: Wann? (Jahr)", false),
+        new QuestionnaireItemText("qI-year", "Wenn Ja: Wann? (Jahr)", false),
         new QuestionnaireItemDefinedOne("qI-single", "<b>Haben Sie Konzentrations- oder Hörschwächen?", true, ["Ja", "Nein"]),
         // new QuestionnaireItemText("qI-text", "Wenn ja: Welche?", false),
-        new QuestionnaireItemDefinedOne("qI-single", "Wenn js: Benutzen Sie Hilfsmittel?", false, ["Ja", "Nein"]),
-        new QuestionnaireItemText("qI-text", "Wenn ja: Welche?", false),
+        new QuestionnaireItemDefinedOne("qI-single", "Wenn ja: Benutzen Sie Hilfsmittel (z.B. Hörgerät, Medikamente)?", false, ["Ja", "Nein"]),
+        new QuestionnaireItemText("qI-text", "Wenn Ja: Welche? (Wenn Sie spezielle Medikamente einnehmen ist es ausreichend mit 'Medikamente' zu antworten)", false),
     );
 
     screens.push(PreTestQuestionaire);
@@ -100,21 +107,76 @@ function setupScreens(){
     
     var Tutorial = new ScreenUIElements(
         new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
-        new UIElementHTML(undefined, "<h1>Einführung</h1>"),
-        new UIElementHTML(undefined, "Hallo Testperson. Immer noch vielen Dank, dass Sie freiwillig an diesem Test teilnehmen!"),
-        new UIElementHTML(undefined, "Auf den nächsten Seiten werden Ihnen Audiodateien abgespielt, die Sie auf einer Skala bewerten müssen."),
-        new UIElementHTML(undefined, "Dies sind die 5 Bewertungskategorien:"),
-        new UIElementHTML("questionnaireItem", "<h2>Gesamtqualität</h2> Wie würden Sie die allgemeine Qualität dieser Audio bewerten? Eher gut oder schlecht? <br> <i>(Beschreibt wie angenehm und ansprechend der Klang insgesamt wahrgenommen wurde. Betrachten Sie Faktoren wie Klarheit, Präzision und klangliche Fülle. Dies sollte unabhängig von Faktoren wie der Lautstärke oder Klangfarbe geschehen.) </i>"),
-        new UIElementHTML("questionnaireItem", "<h2>Klangfarbe</h2> Klingt die Stimme verzerrt oder menschlich normal? <br> <i> Beschreibt die Charakteristik oder den spezifischen Klangton einer Probe. Betrachten Sie harmonische Eigenschaften, die Tonhöhenverteilung und andere Merkmale. Ist der Klang eher warm, kühl, lebhaft oder gedämpft? Ein guter Wert zeigt an, dass die Audio-Dateien authentisch und unverfälscht sind. Hingegen könnte eine deutliche Klangfärbung auf spezifische Betonungen in den Frequenzen oder klangliche Eigenheiten hindeuten, was zu einer schlechteren Bewertung führen würde. </i>"),
-        new UIElementHTML("questionnaireItem", "<h2>Diskontinuität</h2> Ist der Ton abgehackt oder spielt es flüssig ab? <br> <i> Beschreibt inwiefern Unterbrechungen, Sprünge oder Unregelmäßigkeiten in gegebenen Proben auftreten. Geringe Diskontinuität weist auf reibungslose Audio-Wiedergabe hin, während ein hoher Diskontinuitäts-Wert auf störende Brüche oder Sprünge im Klangverlauf verweisen würde. </i>"),
-        new UIElementHTML("questionnaireItem", "<h2>Lautstärke</h2> Finden Sie die Audio zu laut oder leise oder ist es genau optimal? <br> <i> Beschreibt die subjektive Wahrnehmung der Stärke oder Intensität des Klangs in einer Probe. Eine angemessene Lautstärke ermöglicht eine klare Hörbarkeit, während eine zu niedrige Lautstärke möglicherweise Details verschleiert und eine zu hohe Lautstärke zu Verzerrungen führen kann. Die Bewertung der Lautstärke berücksichtigt, ob die Pegel konsistent sind und ob sie den Anforderungen des Hörers entsprechen. </i>"),
-        new UIElementHTML("questionnaireItem", "<h2>Rauschen</h2> Hören Sie ein Rauschen oder andere Störgeräusche in dieser Audiodatei und wie stark? <br> <i> Beschreibt die subjektive Wahrnehmung der Stärke oder Intensität des Klangs in einer Probe. Eine angemessene Lautstärke ermöglicht eine klare Hörbarkeit, während eine zu niedrige Lautstärke möglicherweise Details verschleiert und eine zu hohe Lautstärke zu Verzerrungen führen kann. Die Bewertung der Lautstärke berücksichtigt, ob die Pegel konsistent sind und ob sie den Anforderungen des Hörers entsprechen. </i>"),
-        new UIElementHTML(undefined, "Einige Hinweise: Die Audiodatei kann mehrmals wiederholt angehört werden. Außerdem ist zu beachten, dass wenn man auf die nächste Seite kommt, dass die Audio sofort automatisch abgespielt wird. Des Weiteren gibt es eine kurze Pause nach ca. 40 Fragen."),
-        new UIElementHTML(undefined, "Falls Fragen während des Tests aufkommen sollten, können Sie sich jederzeit an einen Betreuer bzw. einer Betreuerin im Raum wenden."),
+        new UIElementHTML("tutorial", "<h1>Einführung</h1>"),
+        new UIElementHTML("tutorial", "Herzlich willkommen zu unserem Experiment über die Untersuchung von Audio-Degradierung! <br> In dieser Studie werden wir die Auswirkungen verschiedener Faktoren auf die Klangqualität von Audio-Proben erforschen. <br> Das Experiment erstreckt sich generell über 90 Minuten "),
+        new UIElementHTML("tutorial", "<b> Ablauf </b> <ul> <li> Innerhalb des Experiments erhalten Sie zwei Sets von jeweils ca. 40 Audiodateien </li> <li> Diese Audiodateien bewerten Sie anhand der Gesichtspunkte Gesamtqualität, Klangfarbe, Diskontinuität, Lautstärke und Rauschintensität </li> <li> Ihr Ziel ist es, die Audio-Charakteristika und mögliche Beeinträchtigungen in den Proben zu identifizieren. </li> <li> Wir bitten Sie, Ihre Bewertungen nach bestem Wissen und Gewissen abzugeben, da diese dazu beitragen werden, <br> ein präzises Bild der Klangqualität zu zeichnen. Vielen Dank, dass Sie sich die Zeit nehmen, an diesem Experiment teilzunehmen. </li> <li> Im folgenden erhalten Sie eine kurze Einführung in das Bewertungssystem und die jeweiligen Bewertungskategorien </li> </ul> <b> Hinweise </b> <ul> <li> Die Audiodateien werden beim betreten der Seite automatisch abgespielt </li> <li> Eine Audiodatei kann wiederholt abgespielt werden. Verwenden Sie hierfür den 'Replay'-Knopf </li> <li> Sie müssen sich die Audiodatei mindestens einmal komplett anhören, um forfahren zu können </li> <li> Nach ca. 40 Fragen haben Sie die Möglichkeit eine kurze Pause zu machen </li> <li> Sollten Sie während des Tests eine Frage haben wenden Sie sich bitte an den/die jeweilige Betreuer:in </li> </ul>"),
     );
 
     screens.push(Tutorial);
 
+    var Tutorial2 = new ScreenUIElements(
+        new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
+        new UIElementHTML(undefined, "<h1>Einführung</h1>"),
+        new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<p> Wie bereits erwähnt wird die Audiodatei beim betreten der Seite direkt abgespielt. Mithilfe des 'Replay'-Knopfes können Sie die Audiodatei erneut abspielen. </p>", false, "audio_files/real_files/F1_C01.wav", true, "Replay"),
+        new UIElementHTML("tutorial", "<b> Bitte bewerten Sie die Audiodatei nun anhand der folgenden 5 Bewertungskategorien (Klicken Sie hierfür die gewünschte Stelle auf der jeweiligen Skala an):"),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Gesamtqualität</h2> <p> Beschreibt wie angenehm und ansprechend der Klang insgesamt wahrgenommen wurde. Betrachten Sie Faktoren wie Klarheit, Präzision und klangliche Fülle. Dies sollte unabhängig von Faktoren wie der Lautstärke oder Klangfarbe geschehen. </p> <i> Wie würden Sie die allgemeine Qualität dieser Audio bewerten? Eher gut oder schlecht? </i>", false, ["", "schlecht", "dürftig", "ordentlich", "gut", "ausgezeichnet", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Klangfarbe</h2> <p> Beschreibt die Charakteristik oder den spezifischen Klangton einer Probe. Betrachten Sie harmonische Eigenschaften, die Tonhöhenverteilung und andere Merkmale. Ist der Klang eher warm, kühl, lebhaft oder gedämpft? Ein guter Wert zeigt an, dass die Audio-Dateien authentisch und unverfälscht sind. Hingegen könnte eine deutliche Klangfärbung auf spezifische Betonungen in den Frequenzen oder klangliche Eigenheiten hindeuten, was zu einer schlechteren Bewertung führen würde. </p> <i> Klingt die Stimme verzerrt oder menschlich normal? </i>", false, ["", "klanglich unverfärbt", "", "", "", "klanglich verfärbt", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Diskontinuität</h2> <p> Beschreibt inwiefern Unterbrechungen, Sprünge oder Unregelmäßigkeiten in gegebenen Proben auftreten. Geringe Diskontinuität weist auf reibungslose Audio-Wiedergabe hin, während ein hoher Diskontinuitäts-Wert auf störende Brüche oder Sprünge im Klangverlauf verweisen würde. </p> <i> Ist der Ton abgehackt oder spielt es flüssig ab? </i>", false, ["", "kontinuierlich", "", "", "", "diskontinuierlich", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Lautstärke</h2> <p> Beschreibt die subjektive Wahrnehmung der Stärke oder Intensität des Klangs in einer Probe. Eine angemessene Lautstärke ermöglicht eine klare Hörbarkeit, während eine zu niedrige Lautstärke möglicherweise Details verschleiert und eine zu hohe Lautstärke zu Verzerrungen führen kann. Die Bewertung der Lautstärke berücksichtigt, ob die Pegel konsistent sind und ob sie den Anforderungen des Hörers entsprechen. </p> <i> Finden Sie die Audio zu laut oder leise oder ist es genau optimal? </i>", false, ["", "optimal", "", "", "", "nicht optimal", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Rauschen</h2> <p> Beschreibt die Präsenz und Intensität von unerwünschten Hintergrundgeräuschen oder Störungen in einer Probe. Eine geringe Rauschintensität wird positiv bewertet, da sie zu einem klaren und sauberen Klang beiträgt. Im Gegensatz dazu kann starkes Rauschen die Wahrnehmung von Details beeinträchtigen und das Hörerlebnis stören. </p> <i> Hören Sie ein Rauschen oder andere Störgeräusche in dieser Audiodatei und wie stark? </i>", false, ["", "unrauschhaftig", "", "", "", "rauschhaftig", ""]),
+    );
+
+    screens.push(Tutorial2);
+
+    var Tutorial3 = new ScreenUIElements(
+        new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
+        new UIElementHTML(undefined, "<h1>Einführung</h1>"),
+        new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<p> Wie bereits erwähnt wird die Audiodatei beim betreten der Seite direkt abgespielt. Mithilfe des 'Replay'-Knopfes können Sie die Audiodatei erneut abspielen. </p>", false, "audio_files/real_files/F2_C01.wav", true, "Replay"),
+        new UIElementHTML("tutorial", "<b> Bitte bewerten Sie die Audiodatei nun anhand der folgenden 5 Bewertungskategorien (Klicken Sie hierfür die gewünschte Stelle auf der jeweiligen Skala an):"),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Gesamtqualität</h2> <p> Beschreibt wie angenehm und ansprechend der Klang insgesamt wahrgenommen wurde. Betrachten Sie Faktoren wie Klarheit, Präzision und klangliche Fülle. Dies sollte unabhängig von Faktoren wie der Lautstärke oder Klangfarbe geschehen. </p> <i> Wie würden Sie die allgemeine Qualität dieser Audio bewerten? Eher gut oder schlecht? </i>", false, ["", "schlecht", "dürftig", "ordentlich", "gut", "ausgezeichnet", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Klangfarbe</h2> <p> Beschreibt die Charakteristik oder den spezifischen Klangton einer Probe. Betrachten Sie harmonische Eigenschaften, die Tonhöhenverteilung und andere Merkmale. Ist der Klang eher warm, kühl, lebhaft oder gedämpft? Ein guter Wert zeigt an, dass die Audio-Dateien authentisch und unverfälscht sind. Hingegen könnte eine deutliche Klangfärbung auf spezifische Betonungen in den Frequenzen oder klangliche Eigenheiten hindeuten, was zu einer schlechteren Bewertung führen würde. </p> <i> Klingt die Stimme verzerrt oder menschlich normal? </i>", false, ["", "klanglich unverfärbt", "", "", "", "klanglich verfärbt", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Diskontinuität</h2> <p> Beschreibt inwiefern Unterbrechungen, Sprünge oder Unregelmäßigkeiten in gegebenen Proben auftreten. Geringe Diskontinuität weist auf reibungslose Audio-Wiedergabe hin, während ein hoher Diskontinuitäts-Wert auf störende Brüche oder Sprünge im Klangverlauf verweisen würde. </p> <i> Ist der Ton abgehackt oder spielt es flüssig ab? </i>", false, ["", "kontinuierlich", "", "", "", "diskontinuierlich", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Lautstärke</h2> <p> Beschreibt die subjektive Wahrnehmung der Stärke oder Intensität des Klangs in einer Probe. Eine angemessene Lautstärke ermöglicht eine klare Hörbarkeit, während eine zu niedrige Lautstärke möglicherweise Details verschleiert und eine zu hohe Lautstärke zu Verzerrungen führen kann. Die Bewertung der Lautstärke berücksichtigt, ob die Pegel konsistent sind und ob sie den Anforderungen des Hörers entsprechen. </p> <i> Finden Sie die Audio zu laut oder leise oder ist es genau optimal? </i>", false, ["", "optimal", "", "", "", "nicht optimal", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Rauschen</h2> <p> Beschreibt die Präsenz und Intensität von unerwünschten Hintergrundgeräuschen oder Störungen in einer Probe. Eine geringe Rauschintensität wird positiv bewertet, da sie zu einem klaren und sauberen Klang beiträgt. Im Gegensatz dazu kann starkes Rauschen die Wahrnehmung von Details beeinträchtigen und das Hörerlebnis stören. </p> <i> Hören Sie ein Rauschen oder andere Störgeräusche in dieser Audiodatei und wie stark? </i>", false, ["", "unrauschhaftig", "", "", "", "rauschhaftig", ""]),
+    );
+
+    screens.push(Tutorial3);
+
+    var Tutorial4 = new ScreenUIElements(
+        new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
+        new UIElementHTML(undefined, "<h1>Einführung</h1>"),
+        new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<p> Wie bereits erwähnt wird die Audiodatei beim betreten der Seite direkt abgespielt. Mithilfe des 'Replay'-Knopfes können Sie die Audiodatei erneut abspielen. </p>", false, "audio_files/real_files/M1_C01.wav", true, "Replay"),
+        new UIElementHTML("tutorial", "<b> Bitte bewerten Sie die Audiodatei nun anhand der folgenden 5 Bewertungskategorien (Klicken Sie hierfür die gewünschte Stelle auf der jeweiligen Skala an):"),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Gesamtqualität</h2> <p> Beschreibt wie angenehm und ansprechend der Klang insgesamt wahrgenommen wurde. Betrachten Sie Faktoren wie Klarheit, Präzision und klangliche Fülle. Dies sollte unabhängig von Faktoren wie der Lautstärke oder Klangfarbe geschehen. </p> <i> Wie würden Sie die allgemeine Qualität dieser Audio bewerten? Eher gut oder schlecht? </i>", false, ["", "schlecht", "dürftig", "ordentlich", "gut", "ausgezeichnet", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Klangfarbe</h2> <p> Beschreibt die Charakteristik oder den spezifischen Klangton einer Probe. Betrachten Sie harmonische Eigenschaften, die Tonhöhenverteilung und andere Merkmale. Ist der Klang eher warm, kühl, lebhaft oder gedämpft? Ein guter Wert zeigt an, dass die Audio-Dateien authentisch und unverfälscht sind. Hingegen könnte eine deutliche Klangfärbung auf spezifische Betonungen in den Frequenzen oder klangliche Eigenheiten hindeuten, was zu einer schlechteren Bewertung führen würde. </p> <i> Klingt die Stimme verzerrt oder menschlich normal? </i>", false, ["", "klanglich unverfärbt", "", "", "", "klanglich verfärbt", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Diskontinuität</h2> <p> Beschreibt inwiefern Unterbrechungen, Sprünge oder Unregelmäßigkeiten in gegebenen Proben auftreten. Geringe Diskontinuität weist auf reibungslose Audio-Wiedergabe hin, während ein hoher Diskontinuitäts-Wert auf störende Brüche oder Sprünge im Klangverlauf verweisen würde. </p> <i> Ist der Ton abgehackt oder spielt es flüssig ab? </i>", false, ["", "kontinuierlich", "", "", "", "diskontinuierlich", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Lautstärke</h2> <p> Beschreibt die subjektive Wahrnehmung der Stärke oder Intensität des Klangs in einer Probe. Eine angemessene Lautstärke ermöglicht eine klare Hörbarkeit, während eine zu niedrige Lautstärke möglicherweise Details verschleiert und eine zu hohe Lautstärke zu Verzerrungen führen kann. Die Bewertung der Lautstärke berücksichtigt, ob die Pegel konsistent sind und ob sie den Anforderungen des Hörers entsprechen. </p> <i> Finden Sie die Audio zu laut oder leise oder ist es genau optimal? </i>", false, ["", "optimal", "", "", "", "nicht optimal", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Rauschen</h2> <p> Beschreibt die Präsenz und Intensität von unerwünschten Hintergrundgeräuschen oder Störungen in einer Probe. Eine geringe Rauschintensität wird positiv bewertet, da sie zu einem klaren und sauberen Klang beiträgt. Im Gegensatz dazu kann starkes Rauschen die Wahrnehmung von Details beeinträchtigen und das Hörerlebnis stören. </p> <i> Hören Sie ein Rauschen oder andere Störgeräusche in dieser Audiodatei und wie stark? </i>", false, ["", "unrauschhaftig", "", "", "", "rauschhaftig", ""]),
+    );
+
+    screens.push(Tutorial4);
+
+    var Tutorial5 = new ScreenUIElements(
+        new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
+        new UIElementHTML(undefined, "<h1>Einführung</h1>"),
+        new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<p> Wie bereits erwähnt wird die Audiodatei beim betreten der Seite direkt abgespielt. Mithilfe des 'Replay'-Knopfes können Sie die Audiodatei erneut abspielen. </p>", false, "audio_files/real_files/M2_C01.wav", true, "Replay"),
+        new UIElementHTML("tutorial", "<b> Bitte bewerten Sie die Audiodatei nun anhand der folgenden 5 Bewertungskategorien (Klicken Sie hierfür die gewünschte Stelle auf der jeweiligen Skala an):"),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Gesamtqualität</h2> <p> Beschreibt wie angenehm und ansprechend der Klang insgesamt wahrgenommen wurde. Betrachten Sie Faktoren wie Klarheit, Präzision und klangliche Fülle. Dies sollte unabhängig von Faktoren wie der Lautstärke oder Klangfarbe geschehen. </p> <i> Wie würden Sie die allgemeine Qualität dieser Audio bewerten? Eher gut oder schlecht? </i>", false, ["", "schlecht", "dürftig", "ordentlich", "gut", "ausgezeichnet", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Klangfarbe</h2> <p> Beschreibt die Charakteristik oder den spezifischen Klangton einer Probe. Betrachten Sie harmonische Eigenschaften, die Tonhöhenverteilung und andere Merkmale. Ist der Klang eher warm, kühl, lebhaft oder gedämpft? Ein guter Wert zeigt an, dass die Audio-Dateien authentisch und unverfälscht sind. Hingegen könnte eine deutliche Klangfärbung auf spezifische Betonungen in den Frequenzen oder klangliche Eigenheiten hindeuten, was zu einer schlechteren Bewertung führen würde. </p> <i> Klingt die Stimme verzerrt oder menschlich normal? </i>", false, ["", "klanglich unverfärbt", "", "", "", "klanglich verfärbt", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Diskontinuität</h2> <p> Beschreibt inwiefern Unterbrechungen, Sprünge oder Unregelmäßigkeiten in gegebenen Proben auftreten. Geringe Diskontinuität weist auf reibungslose Audio-Wiedergabe hin, während ein hoher Diskontinuitäts-Wert auf störende Brüche oder Sprünge im Klangverlauf verweisen würde. </p> <i> Ist der Ton abgehackt oder spielt es flüssig ab? </i>", false, ["", "kontinuierlich", "", "", "", "diskontinuierlich", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Lautstärke</h2> <p> Beschreibt die subjektive Wahrnehmung der Stärke oder Intensität des Klangs in einer Probe. Eine angemessene Lautstärke ermöglicht eine klare Hörbarkeit, während eine zu niedrige Lautstärke möglicherweise Details verschleiert und eine zu hohe Lautstärke zu Verzerrungen führen kann. Die Bewertung der Lautstärke berücksichtigt, ob die Pegel konsistent sind und ob sie den Anforderungen des Hörers entsprechen. </p> <i> Finden Sie die Audio zu laut oder leise oder ist es genau optimal? </i>", false, ["", "optimal", "", "", "", "nicht optimal", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Rauschen</h2> <p> Beschreibt die Präsenz und Intensität von unerwünschten Hintergrundgeräuschen oder Störungen in einer Probe. Eine geringe Rauschintensität wird positiv bewertet, da sie zu einem klaren und sauberen Klang beiträgt. Im Gegensatz dazu kann starkes Rauschen die Wahrnehmung von Details beeinträchtigen und das Hörerlebnis stören. </p> <i> Hören Sie ein Rauschen oder andere Störgeräusche in dieser Audiodatei und wie stark? </i>", false, ["", "unrauschhaftig", "", "", "", "rauschhaftig", ""]),
+    );
+
+    screens.push(Tutorial5);
+
+    var PreTestScreen = new ScreenUIElements(
+        new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
+        new UIElementHTML(undefined, "Sie können nun mit dem Experiment beginnen. <br> Sollten Sie während des Tests eine Frage haben, wenden Sie sich bitte an den/die jeweilige Betreuer:in."),
+    );
+    
+    screens.push(PreTestScreen);
+    
     let pB = reorderBatchV2();
     
     for(let i = 0; i < pB[0].length; i++){
@@ -128,11 +190,11 @@ function setupScreens(){
             new UIElementHTML(undefined, "<h1>Hörbeispiel " + page.toString() + "</h1>"),
             new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<div class='invisible'> FileName: " + pB[0][i].Name + " Type: " + pB[0][i].Type + "</div>", false, pB[0][i].Path + pB[0][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Gesamtqualität</h2>", false, ["", "schlecht", "dürftig", "ordentlich", "gut", "ausgezeichnet", ""]),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Klangfarbe</h2>", false, ["", "klanglich unverfärbt", "", "", "", "klanglich verfärbt", ""]),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Diskontinuität</h2>", false, ["", "kontinuierlich", "", "", "", "diskontinuierlich", ""]),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Lautstärke</h2>", false, ["", "optimal", "", "", "", "nicht optimal", ""]),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Rauschintensität</h2>", false, ["", "unrauschhaftig", "", "", "", "rauschhaftig", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Gesamtqualität</h2> <p> Beschreibt wie angenehm und ansprechend der Klang insgesamt wahrgenommen wurde. Betrachten Sie Faktoren wie Klarheit, Präzision und klangliche Fülle. Dies sollte unabhängig von Faktoren wie der Lautstärke oder Klangfarbe geschehen. </p>", false, ["", "schlecht", "dürftig", "ordentlich", "gut", "ausgezeichnet", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Klangfarbe</h2> <p> Beschreibt die Charakteristik oder den spezifischen Klangton einer Probe. Betrachten Sie harmonische Eigenschaften, die Tonhöhenverteilung und andere Merkmale. Ist der Klang eher warm, kühl, lebhaft oder gedämpft? Ein guter Wert zeigt an, dass die Audio-Dateien authentisch und unverfälscht sind. Hingegen könnte eine deutliche Klangfärbung auf spezifische Betonungen in den Frequenzen oder klangliche Eigenheiten hindeuten, was zu einer schlechteren Bewertung führen würde. </p>", false, ["", "klanglich unverfärbt", "", "", "", "klanglich verfärbt", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Diskontinuität</h2> <p> Beschreibt inwiefern Unterbrechungen, Sprünge oder Unregelmäßigkeiten in gegebenen Proben auftreten. Geringe Diskontinuität weist auf reibungslose Audio-Wiedergabe hin, während ein hoher Diskontinuitäts-Wert auf störende Brüche oder Sprünge im Klangverlauf verweisen würde. </p>", false, ["", "kontinuierlich", "", "", "", "diskontinuierlich", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Lautstärke</h2> <p> Beschreibt die subjektive Wahrnehmung der Stärke oder Intensität des Klangs in einer Probe. Eine angemessene Lautstärke ermöglicht eine klare Hörbarkeit, während eine zu niedrige Lautstärke möglicherweise Details verschleiert und eine zu hohe Lautstärke zu Verzerrungen führen kann. Die Bewertung der Lautstärke berücksichtigt, ob die Pegel konsistent sind und ob sie den Anforderungen des Hörers entsprechen. </p>", false, ["", "optimal", "", "", "", "nicht optimal", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Rauschen</h2> <p> Beschreibt die Präsenz und Intensität von unerwünschten Hintergrundgeräuschen oder Störungen in einer Probe. Eine geringe Rauschintensität wird positiv bewertet, da sie zu einem klaren und sauberen Klang beiträgt. Im Gegensatz dazu kann starkes Rauschen die Wahrnehmung von Details beeinträchtigen und das Hörerlebnis stören. </p>", false, ["", "unrauschhaftig", "", "", "", "rauschhaftig", ""]),
         );
 
         screens.push(AudioSampleScreen);
@@ -157,11 +219,11 @@ function setupScreens(){
             new UIElementHTML(undefined, "<h1>Hörbeispiel " + page.toString() + "</h1>"),
             new QuestionnaireItemMediaAudioRepeatable("questionnaireItem", "<div class='invisible'> FileName: " + pB[1][i].Name + " Type: " + pB[1][i].Type + "</div>", false, pB[1][i].Path + pB[1][i].Name, true, "Replay"),
             new UIElementHTML(undefined, text),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Gesamtqualität</h2>", false, ["", "schlecht", "dürftig", "ordentlich", "gut", "ausgezeichnet", ""]),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Klangfarbe</h2>", false, ["", "klanglich unverfärbt", "", "", "", "klanglich verfärbt", ""]),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Diskontinuität</h2>", false, ["", "kontinuierlich", "", "", "", "diskontinuierlich", ""]),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Lautstärke</h2>", false, ["", "optimal", "", "", "", "nicht optimal", ""]),
-            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Rauschintensität</h2>", false, ["", "unrauschhaftig", "", "", "", "rauschhaftig", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Gesamtqualität</h2> <p> Beschreibt wie angenehm und ansprechend der Klang insgesamt wahrgenommen wurde. Betrachten Sie Faktoren wie Klarheit, Präzision und klangliche Fülle. Dies sollte unabhängig von Faktoren wie der Lautstärke oder Klangfarbe geschehen. </p>", false, ["", "schlecht", "dürftig", "ordentlich", "gut", "ausgezeichnet", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Klangfarbe</h2> <p> Beschreibt die Charakteristik oder den spezifischen Klangton einer Probe. Betrachten Sie harmonische Eigenschaften, die Tonhöhenverteilung und andere Merkmale. Ist der Klang eher warm, kühl, lebhaft oder gedämpft? Ein guter Wert zeigt an, dass die Audio-Dateien authentisch und unverfälscht sind. Hingegen könnte eine deutliche Klangfärbung auf spezifische Betonungen in den Frequenzen oder klangliche Eigenheiten hindeuten, was zu einer schlechteren Bewertung führen würde. </p>", false, ["", "klanglich unverfärbt", "", "", "", "klanglich verfärbt", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Diskontinuität</h2> <p> Beschreibt inwiefern Unterbrechungen, Sprünge oder Unregelmäßigkeiten in gegebenen Proben auftreten. Geringe Diskontinuität weist auf reibungslose Audio-Wiedergabe hin, während ein hoher Diskontinuitäts-Wert auf störende Brüche oder Sprünge im Klangverlauf verweisen würde. </p>", false, ["", "kontinuierlich", "", "", "", "diskontinuierlich", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Lautstärke</h2> <p> Beschreibt die subjektive Wahrnehmung der Stärke oder Intensität des Klangs in einer Probe. Eine angemessene Lautstärke ermöglicht eine klare Hörbarkeit, während eine zu niedrige Lautstärke möglicherweise Details verschleiert und eine zu hohe Lautstärke zu Verzerrungen führen kann. Die Bewertung der Lautstärke berücksichtigt, ob die Pegel konsistent sind und ob sie den Anforderungen des Hörers entsprechen. </p>", false, ["", "optimal", "", "", "", "nicht optimal", ""]),
+            new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<h2>Rauschen</h2> <p> Beschreibt die Präsenz und Intensität von unerwünschten Hintergrundgeräuschen oder Störungen in einer Probe. Eine geringe Rauschintensität wird positiv bewertet, da sie zu einem klaren und sauberen Klang beiträgt. Im Gegensatz dazu kann starkes Rauschen die Wahrnehmung von Details beeinträchtigen und das Hörerlebnis stören. </p>", false, ["", "unrauschhaftig", "", "", "", "rauschhaftig", ""]),
         );
 
         screens.push(AudioSampleScreen);
@@ -174,29 +236,32 @@ function setupScreens(){
         new QuestionnaireItemDefinedOne("qI-single", "<b>Wie identifizieren Sie sich?", true,["männlich", "weiblich", "intersexuell/divers", "keine Angabe"]),
         new QuestionnaireItemSVGQuality7pt("questionnaireItem", "Fühlen Sie sich romantisch zu Frauen bzw. weiblichen/femininen Personen hingezogen?", false, ["", "keine Anziehungskraft", "", "", "", "große Anziehungskraft", ""]),
         new QuestionnaireItemSVGQuality7pt("questionnaireItem", "Fühlen Sie sich romantisch zu Männern bzw. männlichen/maskulinen Personen hingezogen?", false, ["", "keine Anziehungskraft", "", "", "", "große Anziehungskraft", ""]),
-        new QuestionnaireItemDefinedOne("qI-single", "<b>Was ist Ihr höchster erreichter Bildungsabschluss?", true, ["Noch in schulischer Ausbildung", "Fachhochschul- oder Hochschulreife", "Haupt- (Volks)schulabschluss", "Universitäts- oder Fachhochschulabschluss","Realschul- oder gleichwertiger Abschluss", "Ausbildung", "keine der genannten"]),
+        new QuestionnaireItemDefinedOne("qI-single", "<b>Was ist Ihr höchster erreichter Bildungsabschluss?", true, [ "Universitäts- oder Fachhochschulabschluss", "abgeschlossene Berufsausbildung", "Fachhochschul- oder Hochschulreife (Abitur)", "Realschul- oder gleichwertiger Abschluss", "Haupt- (Volks)schulabschluss", "Noch in schulischer Ausbildung", "keine der genannten"]),
         new QuestionnaireItemDefinedOne("qI-single", "<b>Sind Sie hungrig?", true, ["Ja", "Nein"]),
-        new QuestionnaireItemText("qI-time", "Wann haben Sie zuletzt gegessen?", false),
-        new QuestionnaireItemDefinedOne("qI-single", "<b>Hatten oder haben Sie heute Zeitdruck?", true, ["Ja", "Nein"]),
-        new QuestionnaireItemText("qI-time", "Wenn ja: Wann?", false),
+        new QuestionnaireItemText("qI-hour", "<b> Vor wie vielen Stunden haben Sie zuletzt gegessen?", true),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden haben Sie letzte Nacht geschlafen?", true),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<b>Hatten oder haben Sie heute Zeitdruck?", true, ["", "kein Zeitdruck", "", "", "", "starker Zeitdruck", ""]),
+        new QuestionnaireItemText("qI-time", "Wenn Ja: Wann?", false),
         new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<b>Wie wichtig ist Ihnen Audio- bzw. Telefonqualität?", true, ["", "völlig unwichtig", "", "", "", "sehr wichtig", ""]),
-        new QuestionnaireItemText("qI-text", "<b>Wie fühlen Sie sich heute?", true),
-        new QuestionnaireItemDefinedOne("qI-single", "<b>Hat sich Ihre Stimmung während der Befragung geändert?", true, ["Ja", "Nein"]),
-        new QuestionnaireItemText("qI-text", "Wenn ja: An welcher Stelle?", false),
+        new UIElementHTML("questionnaireItem", "<b>Wie fühlen Sie sich heute?"),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "", true, ["", "A", "", "", "", "B", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "", true, ["", "C", "", "", "", "D", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<b>Hat sich Ihre Stimmung während der Befragung geändert?", true, ["", "stark verschlechtert", "", "keine Veränderung", "", "stark verbessert", ""]),
+        new QuestionnaireItemText("qI-text", "Anmerkung (z.B. an welcher Stelle oder aus welchem Grund?)", false),
     );
 
     screens.push(PostTestQuestionaire);
     
-    var EndScreen = new ScreenWaitDataDownload(undefined, "Danke für Ihre Teilnahme!", testID + ".csv", false);
+    var EndScreen = new ScreenWaitDataDownload(undefined, "Danke für Ihre Teilnahme!", testID + "-(" + dateTime + ").csv", false);
     
     screens.push(EndScreen);
     
     let standardButton = new PaginateUIButton("button", undefined, 1, "", "Weiter");
-    let button1 = new PaginateUIButton("button", undefined, 1, "", "Vorbefragung starten");
+    let button1 = new PaginateUIButton("button", undefined, 1, "", "Test starten");
     //let backButton = new PaginateUIButton("button", -1, 1, "Zurück", "Weiter");
 
     for (let i = 0; i < screens.length; i++) {
-        if(i > 0){
+        if(i !== 6){
             screens[i].setPaginateUI(standardButton);
         }
         else {
@@ -220,7 +285,7 @@ function reorderBatchV2(){
     let normalQuestions = [];
 
     for(let i = 0; i < batch.length; i++){    
-        if(batch[i].Type === "gold" || batch[i].Type === "trick"){
+        if(batch[i].Type === "Gold" || batch[i].Type === "trick"){
             specialQuestions.push(batch[i]);
             indices.push(i);
         }

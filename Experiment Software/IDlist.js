@@ -5,7 +5,7 @@ let idList = [
       ID: 'yglgt#98',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch1', 'batch2' ],
-      SessionsTaken: 1
+      SessionsTaken: 0
     },
     {
       ID: 'ardhc#13',
