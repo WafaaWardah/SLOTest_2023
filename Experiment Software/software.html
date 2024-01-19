@@ -48,7 +48,7 @@
         </header>
         
         <div class = "input-container">
-            <input type="text" class="input-field" id="input-id" placeholder="Bitte ID eingeben">
+            <input type="text" class="input-field" id="input-id" placeholder="Bitte Key eingeben">
         </div>
         <button type="submit" class="start-button" onclick="verifyID()"> Vorbefragung starten </button>
 
@@ -59,12 +59,12 @@
                 testID = document.getElementById("input-id").value;
 
                 //for testing purposes we set the ID to a constant value
-                testID = "yglgt#98"
+                //testID = "yglgt#98"
 
                 dateTime = new Date().toLocaleString();
 
                 //also just for testing purposes: sets the participant batch (currently only 40 files) to fixed value
-                batch = batch3;
+                //batch = batch3;
 
                 //now we check if the input ID is included in the valid IDs array
                 if(validIDs.includes(testID)){
