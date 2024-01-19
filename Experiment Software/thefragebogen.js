@@ -2493,7 +2493,7 @@ class QuestionnaireItemText extends QuestionnaireItem {
                 this.input.name = "age";
                 this.input.min = "15";
                 this.input.max = "100";
-                this.input.placeholder = "z.B. 25";
+                this.input.placeholder = "25";
                 break;
             case "qI-hour":
                 this.input = document.createElement("input");
@@ -2509,7 +2509,7 @@ class QuestionnaireItemText extends QuestionnaireItem {
                 this.input.name = "age";
                 this.input.min = "1910";
                 this.input.max = "2024";
-                this.input.placeholder = "z.B. 2024";
+                this.input.placeholder = "2024";
                 break;
             case "qI-time":
                 this.input = document.createElement("input");

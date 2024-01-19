@@ -83,7 +83,7 @@ function setupScreens(){
         new QuestionnaireItemText("qI-text", "Wenn Deutsch nicht Ihre Muttersprache ist: Was ist Ihre Muttersprache?", false),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche telefonieren Sie übers Festnetz?", true),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche telefonieren Sie mit dem Handy?", true),
-        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche telefonieren über das Internet (z.B. über Messenger-Apps wie Whatsapp)?", true),
+        new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche telefonieren über das Internet (z.B. über Discord, Messenger-Apps wie Whatsapp)?", true),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Videoanrufe?", true),
         new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<b>Wie sind Ihre bisherigen Erfahrungen mit o.g. Telekommunikationsmitteln?", true, ["", "sehr schlecht", "", "", "", "sehr gut", ""]),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Social Media?", true),
