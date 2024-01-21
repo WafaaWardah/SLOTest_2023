@@ -5,7 +5,7 @@ let idList = [
       ID: 'yglgt#98',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch1', 'batch2' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'ardhc#13',
@@ -35,7 +35,7 @@ let idList = [
       ID: 'vkgmk#78',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch1', 'batch2' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'vsvyg#43',
@@ -65,7 +65,7 @@ let idList = [
       ID: 'xejht#30',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch1', 'batch2' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'dwvfi#72',
