@@ -85,7 +85,7 @@ function setupScreens(){
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche telefonieren Sie mit dem Handy?", true),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche telefonieren über das Internet (z.B. über Discord, Messenger-Apps wie Whatsapp)?", true),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Videoanrufe?", true),
-        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<b>Wie sind Ihre bisherigen Erfahrungen mit o.g. Telekommunikationsmitteln?", true, ["", "sehr schlecht", "", "", "", "sehr gut", ""]),
+        new QuestionnaireItemSVGQuality7pt("questionnaireItem", "<b>Wie sind Ihre bisherigen Erfahrungen mit den o.g. Telekommunikationsmitteln?", true, ["", "sehr schlecht", "", "", "", "sehr gut", ""]),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Social Media?", true),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie Online-Zeitungen?", true),
         new QuestionnaireItemText("qI-hour", "<b> Wie viele Stunden pro Woche nutzen Sie den Fernseher?", true),
@@ -107,7 +107,7 @@ function setupScreens(){
     var Tutorial = new ScreenUIElements(
         new UIElementHTML(undefined, "<div id='head'> <div id='wrapper'> <div id='header-text'> <b> Advanced Projects at the Quality & Usability Lab </b></div> <img src='header/TU-Berlin-Logo.png'> </div> </div>"),
         new UIElementHTML("tutorial", "<h1>Einführung</h1>"),
-        new UIElementHTML("tutorial", "<b> Ablauf </b> <ul> <li> Im folgenden Experiment werden Sie 80 Audiodatein in den 5 Kategorien Gesamtqualität, Klangfarbe, Diskontinuität, Lautstärke und Rauschintensität bewerten </li> <li> Ihr Ziel ist es, die Audio-Charakteristika und mögliche Beeinträchtigungen in den Proben zu identifizieren. </li> <li> Wir bitten Sie, Ihre Bewertungen nach bestem Wissen und Gewissen abzugeben, da diese dazu beitragen werden, <br> ein präzises Bild der Klangqualität zu zeichnen. Vielen Dank, dass Sie sich die Zeit nehmen, an diesem Experiment teilzunehmen. </li> <li> Im folgenden erhalten Sie eine kurze Einführung in das Bewertungssystem und die jeweiligen Bewertungskategorien </li> </ul> <b> Hinweise </b> <ul> <li> Die Audiodateien werden beim betreten der Seite automatisch abgespielt </li> <li> Eine Audiodatei kann wiederholt abgespielt werden. Verwenden Sie hierfür den 'Replay'-Knopf </li> <li> Sie müssen sich die Audiodatei mindestens einmal komplett anhören, um forfahren zu können </li> <li> Nach ca. 40 Fragen haben Sie die Möglichkeit eine kurze Pause zu machen </li> <li> Sollten Sie während des Tests eine Frage haben wenden Sie sich bitte an den/die jeweilige Betreuer:in </li> </ul>"),
+        new UIElementHTML("tutorial", "<b> Ablauf </b> <ul> <li> Im folgenden Experiment werden Sie 86 Audiodatein in den 5 Kategorien Gesamtqualität, Klangfarbe, Diskontinuität, Lautstärke und Rauschintensität bewerten </li> <li> Ihr Ziel ist es, die Audio-Charakteristika und mögliche Beeinträchtigungen in den Proben zu identifizieren. </li> <li> Wir bitten Sie, Ihre Bewertungen nach bestem Wissen und Gewissen abzugeben, da diese dazu beitragen werden, <br> ein präzises Bild der Klangqualität zu zeichnen. Vielen Dank, dass Sie sich die Zeit nehmen, an diesem Experiment teilzunehmen. </li> <li> Im folgenden erhalten Sie eine kurze Einführung in das Bewertungssystem und die jeweiligen Bewertungskategorien </li> </ul> <b> Hinweise </b> <ul> <li> Die Audiodateien werden beim betreten der Seite automatisch abgespielt </li> <li> Eine Audiodatei kann wiederholt abgespielt werden. Verwenden Sie hierfür den 'Replay'-Knopf </li> <li> Sie müssen sich die Audiodatei mindestens einmal komplett anhören, um forfahren zu können </li> <li> Nach ca. 40 Fragen haben Sie die Möglichkeit eine kurze Pause zu machen </li> <li> Sollten Sie während des Tests eine Frage haben wenden Sie sich bitte an den/die jeweilige Betreuer:in </li> </ul>"),
     );
 
     screens.push(Tutorial);
@@ -333,7 +333,7 @@ function reorderBatchV2(){
     let session = [];
 
     for(let j = 0; j <= batch.length; j++){
-        if(j === 0 || j % 40 !== 0){
+        if(j === 0 || j % 43 !== 0){
             if(indices[countIndex] === j){
                 session.push(specialQuestions[countIndex]);
                 countIndex++;
