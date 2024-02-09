@@ -5,7 +5,7 @@ let idList = [
       ID: 'yglgt#98',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch1', 'batch2' ],
-      SessionsTaken: 1
+      SessionsTaken: 2
     },
     {
       ID: 'ardhc#13',
@@ -197,19 +197,19 @@ let idList = [
       ID: 'qdbvt#40',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch5', 'batch1' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'crjms#49',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch2', 'batch3' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'ygxcz#81',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch4', 'batch5' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'lgnkm#77',
@@ -221,25 +221,25 @@ let idList = [
       ID: 'wjixh#46',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch3', 'batch4' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'frydv#47',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch5', 'batch1' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'fjrjn#85',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch2', 'batch3' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'wskcu#60',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch4', 'batch5' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'hzffm#34',
@@ -251,7 +251,7 @@ let idList = [
       ID: 'xsqbw#29',
       Batches: [ [Array], [Array] ],
       BatchIds: [ 'batch3', 'batch4' ],
-      SessionsTaken: 0
+      SessionsTaken: 1
     },
     {
       ID: 'amopd#94',
