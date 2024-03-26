@@ -62,3 +62,7 @@ https://thefragebogen.de/
 - Hearing impairment
 - Participant ID
 - Pre-selection of Speech-Files (Wafaa)
+- 
+### Report
+Google Drive: https://docs.google.com/document/d/1k9OxX78EFZ-7xRMmc4MShu2aq1VS8XsDzH_Gv3pqZdo/edit
+You can also find it as a pdf in the repository
